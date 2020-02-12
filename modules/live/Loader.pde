@@ -1,7 +1,7 @@
-class CaseLoader {
+class Loader {
   String url;
   String status;
-  CaseLoader () {
+  Loader () {
   }
   Table load (String Link) {
     JSONObject _job;
@@ -55,7 +55,7 @@ class CaseLoader {
     for (int m = 1; m < T.getRowCount(); m++) {
       String c1 = T.getRow(m).getString(1);
       String c2 = T.getRow(m-1).getString(1);
-      println ("country : ", c1);
+      //println ("country : ", c1);
       if (c1.equals(c2)) { 
         // if the current row is continuous from the above row.
         // sum up the current row values to the previous
