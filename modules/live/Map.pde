@@ -63,7 +63,7 @@ class Map {
         //println(currentName," ",T.getRow(k).getString(1));
         if (T.getRow(k).getString("iso").equals(currentISO)) {
           hasCase = true;
-          println(T.getRow(k).getString(6), " marked");
+          //println(T.getRow(k).getString(6), " marked");
           c = T.getRow(k).getInt(3);
           d = T.getRow(k).getInt(4);
           r = T.getRow(k).getInt(5);
@@ -73,14 +73,14 @@ class Map {
         //fill(360, map(, 0, ), 100, map());
         //println (ps.width," ", ps.height);
         //noFill();
-        fill(360, map(c, 0, stat.get("totalConfirmed"), 35, 70), map(c, 0, stat.get("totalConfirmed"), 50, 100), map(c, 0, stat.get("totalConfirmed"), 70, 100));
+        fill(360, map(c, 0, stat.get("totalConfirmed"), 10, 70), map(c, 0, stat.get("totalConfirmed"), 80, 90), map(c, 0, stat.get("totalConfirmed"), 70, 100));
         strokeWeight(1);
-        //ellipseMode(CENTER);
-        //ellipse (ps.getVertexX(1)*scale + pos.x, ps.getVertexY(1)*scale + pos.y, 50, 50);
+        ellipseMode(CENTER);
+        ellipse (ps.getVertexX(1)*scale + pos.x, ps.getVertexY(1)*scale + pos.y, 50, 50);
         //println("ps.getVertexX(1), ps.getVertexY(1) : ",ps.getVertexX(1), ps.getVertexY(1));
         //fill(60, 100, 100, 50);
       } else {
-        fill(32);
+        fill(64);
       }
       // Draw a single state
       shape(ps, 0, 0);

@@ -1,9 +1,31 @@
 class Loader {
   String url;
   String status;
-  Loader () {
+  String type;
+  StringDict meta;
+  Loader (String _dataType) {
+    switch (_dataType) {
+      case "sheet":
+      type = "sheet";
+      break;
+      case "meta":
+      type = "meta";
+      break;
+    }
   }
-  Table load (String Link) {
+  void load (String Link) {
+    switch (type) {
+      case "sheet":
+      loadSheetData (Link);
+      break;
+      case "meta":
+      loadMetaData (Link);
+      break;
+    }
+  }
+  void loadMetaData (String Link) {
+  }
+  Table loadSheetData (String Link) {
     JSONObject _job;
     Table _table;
     url = Link;
@@ -109,7 +131,7 @@ class Loader {
   }
   int parseDate (String D) {
     String R;
-    String[] P = splitTokens (D, "/ :");
+    String[] P = splitTokens (D, "- :");
     //R = P[2]+nf(int(P[0]), 2) + nf(int(P[1]), 2)+nf(int(P[3]), 2) + nf(int(P[4]), 2) + "L";
     R = nf(int(P[0]), 2) +nf(int(P[1]), 2)+nf(int(P[3]), 2) + nf(int(P[4]), 2);
     return int (R);

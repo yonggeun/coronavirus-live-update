@@ -12,6 +12,9 @@ The Project implements a dashboard to display the real-time information of 2019 
  - Visualization
    - [Coronavirus 2019-nCoV Global Cases ](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6) by [Johns Hopkins CSSE](https://systems.jhu.edu/research/public-health/ncov/)
    - [coronavirus-analysis@github](https://github.com/AaronWard/coronavirus-analysis)
+   - mapbox
+     - https://blog.mapbox.com/visualizing-the-progression-of-the-2019-ncov-outbreak-66763eb59e79
+     - http://www.mapbox.cn/coronavirusmap
 
 - World map
      - [Marked up SVG world map](https://github.com/benhodgson/markedup-svg-worldmap)@github
