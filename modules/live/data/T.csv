@@ -1,74 +1,50 @@
-Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered
-Victoria,Australia,2020021812,4,0,0
-New South Wales,Australia,2020020313,4,0,2
-South Australia,Australia,2020022233,2,0,0
-Queensland,Australia,2020021933,5,0,0
-,Belgium,2020021543,1,0,0
-,Cambodia,2020010815,1,0,0
-"Toronto, ON",Canada,2020020013,2,0,0
-British Columbia,Canada,2020020543,4,0,0
-"London, ON",Canada,2020020003,1,0,0
-,Finland,2020020003,1,0,1
-,France,2020020953,11,0,0
-,Germany,2020021933,16,0,0
-Hong Kong,Hong Kong,2020020943,49,1,0
-,India,2020022143,3,0,0
-,Italy,2020021753,3,0,0
-,Japan,2020020253,26,0,9
-Macau,Macau,2020021423,10,0,1
-Hebei,Mainland China,2020020003,251,2,48
-Heilongjiang,Mainland China,2020020013,378,8,28
-Chongqing,Mainland China,2020022353,505,3,79
-Beijing,Mainland China,2020020303,342,3,48
-Inner Mongolia,Mainland China,2020020243,58,0,5
-Tianjin,Mainland China,2020022313,106,2,10
-Shanghai,Mainland China,2020020013,306,1,53
-Ningxia,Mainland China,2020021003,53,0,22
-Qinghai,Mainland China,2020021123,18,0,5
-Shanxi,Mainland China,2020022333,124,0,30
-Gansu,Mainland China,2020021523,86,2,24
-Shaanxi,Mainland China,2020020603,219,0,32
-Hubei,Mainland China,2020022333,33366,1068,2639
-Yunnan,Mainland China,2020020143,154,0,20
-Sichuan,Mainland China,2020020103,436,1,85
-Jilin,Mainland China,2020020103,83,1,18
-Guizhou,Mainland China,2020020113,131,1,17
-Fujian,Mainland China,2020020053,272,0,46
-Hainan,Mainland China,2020020033,151,3,20
-Henan,Mainland China,2020020043,1135,8,231
-Liaoning,Mainland China,2020020043,116,0,19
-Tibet,Mainland China,2020020152,1,0,0
-Anhui,Mainland China,2020020113,889,4,108
-Xinjiang,Mainland China,2020020143,59,0,3
-Hunan,Mainland China,2020020143,946,2,263
-Guangxi,Mainland China,2020020033,222,1,31
-Shandong,Mainland China,2020020143,497,1,80
-Jiangsu,Mainland China,2020020123,543,0,94
-Jiangxi,Mainland China,2020020123,844,1,152
-Zhejiang,Mainland China,2020020123,1131,0,279
-Guangdong,Mainland China,2020020123,1219,1,241
-,Malaysia,2020020313,18,0,3
-,Nepal,2020010815,1,0,0
-Diamond Princess cruise ship,Others,2020021603,135,0,0
-,Philippines,2020021643,3,1,0
-,Russia,2020011613,2,0,0
-,Singapore,2020021643,47,0,9
-,South Korea,2020020003,28,0,4
-,Spain,2020022033,2,0,0
-,Sri Lanka,2020020343,1,0,1
-,Sweden,2020020213,1,0,0
-Taiwan,Taiwan,2020020913,18,0,1
-,Thailand,2020021843,33,0,10
-,UK,2020021903,8,0,0
-,United Arab Emirates,2020020033,8,0,1
-"Madison, WI",US,2020022153,1,0,0
-"Santa Clara, CA",US,2020020043,2,0,0
-"San Diego County, CA",US,2020020123,1,0,0
-"Orange, CA",US,2020021953,1,0,0
-"San Benito, CA",US,2020020353,2,0,0
-"Seattle, WA",US,2020020703,1,0,1
-"Chicago, IL",US,2020021903,2,0,2
-"Los Angeles, CA",US,2020021953,1,0,0
-"Tempe, AZ",US,2020021943,1,0,0
-"Boston, MA",US,2020021943,1,0,0
-,Vietnam,2020021643,15,0,6
+"Country,
+Other",Total Cases,"New
+Cases","Total
+Deaths","New
+Deaths","Total
+Recovered","Serious,
+Critical",Region
+China,78073,415,2715,52,29999,8745,
+S. Korea,1261,115,12,1,24,18,
+Diamond Princess,691,0,4,0,10,36,
+Italy,357,34,11,0,2,19,
+Japan,172,11,2,1,23,13,
+Iran,139,44,19,3,25,0,
+Singapore,91,0,0,0,58,7,
+Hong Kong,85,0,2,0,18,6,
+USA,57,0,0,0,6,0,
+Thailand,40,3,0,0,22,2,
+Taiwan,32,1,1,0,5,1,
+Bahrain,26,3,0,0,0,0,
+Australia,22,0,0,0,15,0,
+Malaysia,22,0,0,0,20,0,
+Germany,18,0,0,0,15,1,
+Kuwait,18,7,0,0,0,0,
+France,17,3,2,1,11,1,
+Vietnam,16,0,0,0,16,0,
+U.K.,13,0,0,0,8,0,
+U.A.E.,13,0,0,0,3,2,
+Canada,11,0,0,0,3,0,
+Macao,10,0,0,0,6,0,
+Spain,10,1,0,0,2,0,
+Iraq,5,0,0,0,0,0,
+Oman,4,0,0,0,0,0,
+Philippines,3,0,1,0,2,0,
+India,3,0,0,0,3,0,
+Austria,2,0,0,0,0,0,
+Croatia,2,1,0,0,0,0,
+Israel,2,0,0,0,0,0,
+Russia,2,0,0,0,2,0,
+Afghanistan,1,0,0,0,0,0,
+Algeria,1,0,0,0,0,0,
+Belgium,1,0,0,0,1,0,
+Cambodia,1,0,0,0,1,0,
+Egypt,1,0,0,0,1,0,
+Finland,1,0,0,0,1,0,
+Lebanon,1,0,0,0,0,0,
+Nepal,1,0,0,0,1,0,
+Sri Lanka,1,0,0,0,1,0,
+Sweden,1,0,0,0,0,0,
+Switzerland,1,0,0,0,0,0,
+Brazil,1,0,0,0,0,0,

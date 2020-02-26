@@ -27,10 +27,17 @@ class Stage {
     system.set("version", System.getProperty("os.version"));
     system.set("username", System.getProperty("user.name"));
     system.set("started", getTimestamp());
+    //
     path = new StringDict();
     path.set("user", System.getProperty("user.dir"));
-    path.set("home", System.getProperty("user.home"));
     path.set("file", getClass().getEnclosingClass().getName());
+    if (split(System.getProperty("os.name"), " ")[0].equals("Windows")) {
+      // windows
+       path.set("home", "D:\\yonggeun");
+    } else { 
+      //mac
+      path.set("home", System.getProperty("user.home"));
+    }
     path.set("sequence", path.get("home")+
       _vault + path.get("file")+
       "/"+playMode+"-"+system.get("started")+"/");
@@ -84,7 +91,7 @@ class Stage {
       }
       //trim(_output);
       //colorMode(HSB, 360, 100, 100, 100); 
-      
+
       textSize(10);
       fill(200);
       textAlign(RIGHT, BOTTOM);

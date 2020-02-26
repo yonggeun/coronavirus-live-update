@@ -61,7 +61,7 @@ class Map {
       strokeWeight(1);
       for (int k = 0; k < T.getRowCount(); k++) {
         //println(currentName," ",T.getRow(k).getString(1));
-        if (T.getRow(k).getString("iso").equals(currentISO)) {
+        if (T.getRow(k).getString(0).equals(currentISO)) {
           hasCase = true;
           //println(T.getRow(k).getString(6), " marked");
           c = T.getRow(k).getInt(3);

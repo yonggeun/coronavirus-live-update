@@ -1,0 +1,157 @@
+class Map2 {
+  PShape shape;
+  Float scale;
+  PVector pos;
+  JSONObject isoList;
+  IntDict stat;
+  Geometry geo;
+  Map2 () {
+    stat = new IntDict();
+    stat.set("totalConfirmed", 0);
+    stat.set("totalDeath", 0);
+    stat.set("totalRecovered", 0);
+    geo = new Geometry();
+  }
+  void attachMap (String L) {
+    shape = loadShape (L);
+    shape.disableStyle();
+    scale = width/shape.width*1.1;
+    println("width", shape.getWidth());
+    //println ("(width-shape.getWidth())/2", (width-shape.getWidth())/2);
+    //shape.translate((width-shape.getWidth())/2, (height - shape.getHeight())/8);
+    shape.scale(scale);
+    println("width", shape.getWidth());
+
+    pos = new PVector ((width-shape.getWidth())/2, (height - shape.getHeight())/8);
+    translate(pos.x, pos.y);
+    isoList = loadISOList ("data/iso3166-1.json");
+  }
+  void render (Table T) {
+    colorMode (HSB, 360, 100, 100, 100);
+    int c = 0;
+    int d = 0;
+    int r = 0;
+    int t = 0;
+
+    for (int i = 0; i < shape.getChildCount(); ++i) {
+      PShape ps = shape.getChild(i);
+      String currentISO = ps.getName();
+      String currentName = getNameFromISO(currentISO);
+      Boolean hasCase = false;
+      // Disable the colors found in the SVG file
+      ps.disableStyle();
+      // styling 
+      //noStroke();
+      stroke(0, 0, 0, 100);
+      strokeWeight(1);
+      for (int k = 0; k < T.getRowCount(); k++) {
+        //println(currentName," ",T.getRow(k).getString(1));
+        if (T.getRow(k).getString(8).equals(currentISO)) {
+          hasCase = true;
+          //println(T.getRow(k).getString(6), " marked");
+          c = T.getRow(k).getInt(1);
+          d = T.getRow(k).getInt(3);
+          r = T.getRow(k).getInt(5);
+        }
+      }
+      if (hasCase == true) {
+        //fill(360, map(, 0, ), 100, map());
+        //println (ps.width," ", ps.height);
+        //noFill();
+        // color mode Hue, Saturation,
+        //line (ps.getVertex((ps.RIGHT)).x, 0, ps.getVertex((ps.RIGHT)).x, height);
+        fill(360, // Hue
+          map(c, 0, stat.get("totalConfirmed"), 10, 90), // Saturation
+          map(c, 0, stat.get("totalConfirmed"), 50, 90), // Brightness
+          map(c, 0, stat.get("totalConfirmed"), 100, 100) // Alpha
+          );
+        //println ("ps.getName()", ps.getName());
+        if (ps.getName().equals("CN")) {
+          //scale(scale);
+          //translate(pos.x/scale, pos.y/-scale);
+          //scale(scale);
+          //translate(pos.x, pos.y);
+          //ellipse(0, 0, 100, 100);
+
+          //circle.setStrokeWeight(3);
+          //ps.addChild(circle);
+          //float left = geo.getLeft(ps);
+          //float right = geo.getRight(ps);
+          //float top = geo.getTop(ps);
+          //float bottom = geo.getBottom(ps);
+          //left = right - ps.getWidth();
+          //bottom = top + ps.getHeight();
+          //stroke (255);
+          //strokeWeight (3);
+          //fill(0);
+          //rectMode (CORNERS);
+          ////rect (left, top, right, bottom);
+          //ps.createShape(RECT, 0, 0, 100, 100);
+          //rect(0, 0 ,0, 0);
+          //println ("cn vertex count", ps.getVertexCount());
+          //popMatrix();
+        }
+        //
+        //strokeWeight(1);
+        //ellipseMode(CENTER);
+        //ellipse (ps.getVertexX(1)*scale + pos.x, ps.getVertexY(1)*scale + pos.y, 50, 50);
+        //println("ps.getVertexX(1), ps.getVertexY(1) : ",ps.getVertexX(1), ps.getVertexY(1));
+        //fill(60, 100, 100, 50);
+      } else {
+        fill(64);
+      }
+    }
+    PShape circle = createShape(ELLIPSE, 0, 0, 100, 100);
+    circle.setStroke(255);
+    circle.setFill(255); 
+    shape(circle);
+    // Draw a single state
+    //shape(ps, pos.x, pos.y);
+    //shape(shape);
+  }
+  void attachTable(Table T) {
+    int confirmedSum = 0;
+    int deathSum = 0;
+    int recoveredSum = 0;
+    T.addColumn("iso");
+    for (int k = 0; k < T.getRowCount(); k++) {
+      //println(currentName," ",T.getRow(k).getString(1));
+      TableRow r = T.getRow(k);
+      // get iso code for each row
+      r.setString("iso", getISO(isoList, r.getString(0)));
+      // push confirmed
+      confirmedSum += r.getInt(1);
+      deathSum += r.getInt(3);
+      recoveredSum += r.getInt(5);
+    }
+    stat.set("totalConfirmed", confirmedSum);
+    stat.set("totalDeath", deathSum);
+    stat.set("totalRecovered", recoveredSum);
+  }
+  JSONObject loadISOList (String url) {
+    JSONObject _job;
+    _job = loadJSONObject (url);
+    return _job;
+  }
+  String getISO (JSONObject list, String name) {
+    String code;
+    String m = list.toString();
+    String q = "([A-Z]{2})\\W+\""+name;
+    String[] r = match(m, q);
+    if (r == null) {
+      code = "";
+    } else {
+      //for (int k = 0; k < r.length; k++) {
+      //  println(r[k]);
+      //}
+      code = r[1];
+    }
+    //code = isoList.getString(name);
+    return code;
+  }
+  String getNameFromISO (String isocode) {
+    String name;
+    name = isoList.getString(isocode);
+    return name;
+  }
+}
