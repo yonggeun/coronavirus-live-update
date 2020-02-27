@@ -88,6 +88,8 @@ class Map2 { //<>// //<>// //<>// //<>//
     stroke (255);
     shape(cc, 0, 0);
   }
+  void updateView() {
+  }
   void renderCountry (PShape cs, Boolean _case, TableRow data) {
     // cs is PShape of the coutnry
     // case is a Boolean value. True if has case, false if no case

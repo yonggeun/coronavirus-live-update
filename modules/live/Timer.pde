@@ -40,7 +40,7 @@ class Timer {
       //println("done");
       _r = totalFrames;
     } else if (repetition) {
-      _r = 0;
+      _r = 1;
     }
     currentFrame = _r;
   }

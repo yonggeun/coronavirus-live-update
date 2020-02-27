@@ -57,6 +57,7 @@ void draw () {
     //updateInfo(caseLoader.timer.currentCut);
     print("cut - " , caseLoader.timer.totalCuts);
     println(" -> " , caseLoader.timer.currentCut);
+    map.updateView();
   }
   s.render();
   //popMatrix();
