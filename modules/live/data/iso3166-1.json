@@ -34,7 +34,7 @@
 	"CO": "Colombia",
 	"CR": "Costa Rica",
 	"CU": "Cuba",
-	"CZ": "Czech Republic",
+	"CZ": "Czechia",
 	"DE": "Germany",
 	"DJ": "Djibouti",
 	"DK": "Denmark",
@@ -92,10 +92,9 @@
 	"LV": "Latvia",
 	"MA": "Morocco",
 	"MD": "Moldova",
-	"MC": "Macao",
 	"MG": "Madagascar",
 	"MX": "Mexico",
-	"MK": "Macedonia",
+	"MK": "North Macedonia",
 	"ML": "Mali",
 	"MM": "Myanmar",
 	"ME": "Montenegro",
@@ -213,5 +212,9 @@
 	"GP": "Guadeloupe (France)",
 	"CW": "Curaco (Netherlands)",
 	"IC": "Canary Islands (Spain)",
-	"DP": "Diamond Princess"
+	"DP": "Diamond Princess",
+	"MO": "Macao",
+	"BH": "Bahrain",
+	"SM": "San Marino",
+	"MC": "Monaco"
 }

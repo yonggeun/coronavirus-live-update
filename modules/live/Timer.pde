@@ -1,75 +1,47 @@
 class Timer {
-  // -------------------------  
+  int cycle;
+  int cycleDurationMS;
+  int cycleDuration;
+  int intervalDurationMS;
   int currentCut;
-  int interval;
-  int totalSeconds = 0;  // second
   int totalCuts;
-  int delay;
-  boolean changed = false;
-  boolean repetition = false;
+  Boolean changed;
   // -------------------------  frames
-  int startFrame;
-  float currentFrame;
-  float totalFrames = 0;
-  int timelineThickness = 30;
-  float cutDurationInFrames;
+  int startMS;
+  float currentMS;
+  float totalMS = 0;
   int fps;
-  // -------------------------  
-  int[][] cuesheet;
-  // -------------------------  
-  Timer  (String _duration, int _cuts, int _fps) {
-    // _duration e.g. 3:50
-    String[] __duration = split(_duration, ':');
+  Timer  (String _duration, int _cuts) {
+    currentCut = 0;
+    cycleDuration = 0;
+    cycleDurationMS = 0;
+    changed = false;
     totalCuts = _cuts;
-    //println("totalCuts : "+totalCuts);
-    for (int i = 0; i<__duration.length; i++) {
-      totalSeconds += int(int(__duration[__duration.length-1-i])*pow(60, i));
+    String[] __duration = split(_duration, ':');
+    for (int i = 0; i < __duration.length; i++) {
+      cycleDuration += int(int(__duration[__duration.length-1-i])*pow(60, i));
     }
-    totalSeconds += delay;
-    fps = _fps;
-    interval = (totalSeconds) / totalCuts;
-    totalFrames = totalSeconds * fps;
-    cutDurationInFrames = ceil (totalFrames / totalCuts);
-    startFrame = frameCount;
+    println(cycleDuration);
+    cycleDurationMS = cycleDuration*1000;
+    intervalDurationMS = cycleDurationMS / _cuts;
+    startMS = millis();
   }
-  void getFramesNow () {
-    float _r = 0;
-    if (frameCount - startFrame < totalFrames) {
-      _r = frameCount - startFrame;
-    } else if (!repetition) {
-      //println("done");
-      _r = totalFrames;
-    } else if (repetition) {
-      _r = 1;
-    }
-    currentFrame = _r;
-  }
-  void getCutNow () {
-    int _currentCut = currentCut;
-    int _r = 0;
-    if (frameCount - startFrame < totalFrames) {
-      _r = frameCount - startFrame;
-      currentCut = floor(_r/(cutDurationInFrames));
-      //} else if (frameCount - startFrame >= totalFrames-1) {
-    } else { 
-      //println("done");
-      currentCut = totalCuts-1;
-    }
-    if (_currentCut != currentCut) {
+  void getCutNow() {
+    int ex_currentCut = currentCut;
+    //println("cycleDurationMS : ",cycleDurationMS);
+    cycle = floor(millis() / cycleDurationMS);
+    currentCut = floor ((millis() % cycleDurationMS) / intervalDurationMS);
+    if (ex_currentCut != currentCut) {
       changed = true;
       onChanged();
     } else {
       changed = false;
     }
-    //println("currentCut : "+currentCut);
   }
+  //println("currentCut : "+currentCut);  }
   void update() {
     getCutNow();
-    getFramesNow();
   }
   void onChanged() {
-    println("changed", changed);
-    println("currerntCut : " + currentCut);
   }
-
 }

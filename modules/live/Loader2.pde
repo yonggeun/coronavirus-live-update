@@ -1,14 +1,17 @@
-class Loader2 {
-  Table table;
+class Loader2 { //<>//
   String url;
   String status;
   String type;
-  StringDict meta;
+  int[] toll;
+  Table table;
+  JSONObject isoList;
   Timer timer;
+  //
+  StringDict meta;
   Loader2 (String _dataType) {
     switch (_dataType) {
-    case "sheet":
-      type = "sheet";
+    case "data":
+      type = "data";
       break;
     case "meta":
       type = "meta";
@@ -17,7 +20,8 @@ class Loader2 {
   }
   void load (String Link) {
     switch (type) {
-    case "sheet":
+    case "data":
+      isoList = loadISOList ("data/iso3166-1.json");
       loadSheetData (Link);
       break;
     case "meta":
@@ -27,7 +31,7 @@ class Loader2 {
   }
   void loadMetaData (String Link) {
   }
-  Table loadSheetData (String Link) {
+  void loadSheetData (String Link) {
     JSONObject _job;
     //Table _table;
     url = Link;
@@ -47,39 +51,47 @@ class Loader2 {
     }
     // parse the object to array
     JSONArray _jarray = _job.getJSONArray("values");
+    //
     table = getTable (_jarray);
-    return table;
   }
   Table getTable (JSONArray J) {
+    // | 0               | 1            | 2          | 3            | 4           | 5            | 6               | 7                  | 8
+    // | Country, Other  | Total Cases  | Total New  | Total Deaths | New Deaths  | Active cases |Total Recovered  | Serious, Critical  | iso  |
     Table T = new Table();
     //Table TF  = new Table();
-    for (int k = 0; k < J.getJSONArray(0).size(); k++) {
+    for (int k = 0; k < J.getJSONArray(0).size(); k++) { // total 8
       T.addColumn(J.getJSONArray(0).getString(k));
-      //TF.addColumn(J.getJSONArray(0).getString(k));
+      //println("T.addColumn(J.getJSONArray(0).getString(k)) : ", J.getJSONArray(0).getString(k));
     }
-    for (int i = 1; i < J.size(); i++) {
+    T.addColumn("iso");
+    toll = new int[T.getColumnCount()]; // total 9
+    for (int i = 1; i < J.size()-1; i++) {
       TableRow TR = T.addRow();
-      //country
+      //0 country
       TR.setString(0, J.getJSONArray(i).getString(0));
-      //println("J.getJSONArray(i).getString(0) : ", J.getJSONArray(i).getString(0)); 
-      //total cases
-      TR.setInt(1, parseNumber (J.getJSONArray(i).getString(1)));
-      //println("int(J.getJSONArray(i).getString(1)) : ", J.getJSONArray(i).getString(1));
-      //new cases
-      TR.setInt(2, parseNumber (J.getJSONArray(i).getString(2)));
-      //total death
-      TR.setInt(3, parseNumber (J.getJSONArray(i).getString(3)));
-      //new death
-      TR.setInt(4, parseNumber (J.getJSONArray(i).getString(4)));
-      //total recovered
-      TR.setInt(5, parseNumber (J.getJSONArray(i).getString(5)));
-      //serious, critical
-      TR.setInt(6, parseNumber (J.getJSONArray(i).getString(6)));
-      //region
-      //TR.setString(7, J.getJSONArray(i).getString(7));
+      print("J.getJSONArray(i).getString(0) : ", J.getJSONArray(i).getString(0));
+      for (int j = 1; j < T.getColumnCount()-1; j++) {
+        int result;
+        if (J.getJSONArray(i).isNull(j) == false) {
+          result = parseNumber (J.getJSONArray(i).getString(j));
+          TR.setInt(j, result);
+          toll[j] += TR.getInt(j);
+        } else {
+          result = -1;
+          toll[j] += 0;
+        }
+      }
+      //8 iso
+      TR.setString(T.getColumnCount()-1, getISOFromName(isoList, J.getJSONArray(i).getString(0)));
+      println("  ------------------------- ", getISOFromName(isoList, J.getJSONArray(i).getString(0)));
     }
+    toll[0] = T.getRowCount();
+    println(toll);
     saveTable(T, "data/T.csv");
     return T;
+  }
+  void setTimer (String _duration) {
+    timer = new Timer (_duration, table.getRowCount()-1);
   }
   int parseDate (String D) {
     String R;
@@ -90,11 +102,39 @@ class Loader2 {
   }
   int parseNumber (String N) {
     int number;
-    String[] numbers = splitTokens(N, ",+");
-    number = int(join(numbers, ""));
+    if (N != null) {
+      String[] numbers = splitTokens(N, ",+");
+      number = int(join(numbers, ""));
+    } else {
+      number = 0;
+    }
     return number;
   }
-  void setTimer (String _duration, int _frameRate) {
-    timer = new Timer (_duration, table.getRowCount(), _frameRate);
+
+  JSONObject loadISOList (String url) {
+    JSONObject _job;
+    _job = loadJSONObject (url);
+    return _job;
+  }
+  String getISOFromName (JSONObject list, String name) {
+    String code;
+    String m = list.toString();
+    String q = "([A-Z]{2})\\W+\""+name;
+    String[] r = match(m, q);
+    if (r == null) {
+      code = "";
+    } else {
+      //for (int k = 0; k < r.length; k++) {
+      //  println(r[k]);
+      //}
+      code = r[1];
+    }
+    //code = isoList.getString(name);
+    return code;
+  }
+  String getNameFromISO (String isocode) {
+    String name;
+    name = isoList.getString(isocode);
+    return name;
   }
 }

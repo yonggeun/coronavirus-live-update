@@ -1,5 +1,6 @@
 class Stage {
   int width;
+  //FHD 1280 x 720
   int height;
   float margin;
   int fps;
