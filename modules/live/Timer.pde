@@ -11,7 +11,7 @@ class Timer {
   float currentMS;
   float totalMS = 0;
   int fps;
-  Timer  (String _duration, int _cuts) {
+  Timer (String _duration, int _cuts) {
     currentCut = 0;
     cycleDuration = 0;
     cycleDurationMS = 0;
@@ -21,7 +21,7 @@ class Timer {
     for (int i = 0; i < __duration.length; i++) {
       cycleDuration += int(int(__duration[__duration.length-1-i])*pow(60, i));
     }
-    println(cycleDuration);
+    //println(cycleDuration);
     cycleDurationMS = cycleDuration*1000;
     intervalDurationMS = cycleDurationMS / _cuts;
     startMS = millis();

@@ -1,4 +1,4 @@
-class Map2 { //<>// //<>// //<>// //<>//
+class Map2 { //<>// //<>// //<>// //<>// //<>//
   PShape shape;
   float scale;
   PVector pos;
@@ -18,13 +18,8 @@ class Map2 { //<>// //<>// //<>// //<>//
 
   Ani bboxXAni;  
   Ani bboxYAni;
-
-  //
-  //PVector worldTollPos;
-  //PVector worldTollSize;
-  //Ani worldTollPosAni;
-  //Ani worldTollSizeAni;
-  //
+  // FONT
+  PFont H2;
   // global rectmode must be CORNERS
   Map2 () {
     bboxX = 0;
@@ -37,7 +32,7 @@ class Map2 { //<>// //<>// //<>// //<>//
     shape.disableStyle();
     scale = width / shape.width;
     //print ("width : ", shape.getWidth());
-    //print (" / scale : ", scale);
+    print (" / scale : ", scale);
     //println(" / width (scaled) : ", shape.getWidth());
     pos = new PVector ((width-shape.getWidth())/2, (height - shape.getHeight())/8);
     //translate(pos.x, pos.y);
@@ -52,6 +47,7 @@ class Map2 { //<>// //<>// //<>// //<>//
   // 3. Render
   void render (int _now) {
     colorMode (HSB, 360, 100, 100, 100);
+    H2 = loadFont("R-CB.vlw");
     int c = 0;
     int d = 0;
     int r = 0;
@@ -99,39 +95,71 @@ class Map2 { //<>// //<>// //<>// //<>//
     drawCurrentCountry(shape.getChild(currentCountryIDonMap), _now);
   }
   void drawCurrentCountry(PShape cc, int _now) {
+    println("---- ", cc.getParent().width);
     float left = geo.getLeft(cc);
     float right = geo.getRight(cc);
     float top = geo.getTop(cc);
     float bottom = geo.getBottom(cc);
-    PVector cent;
+    float w = geo.getW(cc);
+    float h = geo.getH(cc);
+    float wh = (w > h) ? w : h;
+    PVector cent; // cent works fine
     cent = geo.getCentroid(cc);
+    //println (cc.getName(), " x : ", cc.width, " / y : ", cc.height);
+    //println ("cc.width : ", geo.getWidth(cc), " / ", geo.getHeight(cc));
+    //println ("cc.width : ", geo.getW(cc), " / ", geo.getH(cc));
+    //println ("cent : ", cent.x, " / ", cent.y);
+    //println ("w : ", w, " / h : ", h, " / wh : ", wh);
     if (cent.x > width/2) {
       displayMode = 'R';
     } else {
       displayMode = 'L';
     }
-    //bboxXT = cent.x;
-    //bboxYT = cent.y;
-    if (cc.getWidth() < 142) {   
+    if (displayMode == 'R') {
+      rectMode(CORNER);
+      noStroke();
+      fill(0, 100, 100, 10);
+      rect(0, 0, width/2, height);
+    } else {
+      rectMode(CORNER);
+      noStroke();
+      fill(0, 100, 100, 10);
+      rect(width/2, 0, width/2, height);
+    }
+    if (wh < 142) {
+      println("wh : ", wh);
+      // rectangle 
       rectMode (CENTER);
       noFill();
       strokeWeight(2);
       stroke(255);
       rect(bboxX, bboxY, 142, 142);
+      // county name
+      fill(255, 100);
+      textAlign(CENTER, BOTTOM);
+      textFont(H2, 38);
+      text(table.getRow(_now).getString(0), cent.x, cent.y-81);
     } else {
     }
-    textSize(15);
-    fill(255);
-    textAlign(CENTER, BOTTOM);
-    text(table.getRow(_now).getString(0), cent.x, cent.y-81);
-    strokeWeight (1.5);
+    //rect(worldTollPos.x, worldTollPos.y, 284, 284);
+    pushMatrix();
+    translate(bboxX, bboxY);
+    if (wh < 10) {
+      //noStroke();
+      strokeWeight(3);
+      stroke(0, 0, 100, 40);
+      noFill();
+      ellipse(0, 0, 30, 30);
+    }
+    popMatrix();
+    //
+    // shaping the territory
+    strokeWeight (1);
     stroke (255);
+    fill(255, 255);
     shape(cc, 0, 0);
     //draw the total dashboard
-    //rect(worldTollPos.x, worldTollPos.y, 284, 284);
-    if (displayMode == 'L') {
-    } else {
-    }
+
   }
   void updateView(int _cut) {
     println("udate the map with current country");
@@ -146,7 +174,7 @@ class Map2 { //<>// //<>// //<>// //<>//
   PVector getCountryShapeFromDatarowNO (int _rowNo) {
     PVector pos = new PVector ();
     String iso = table.getRow(_rowNo).getString("iso");
-    println("iso ", iso);
+    //println("iso ", iso);
     for (int m = 0; m < shape.getChildCount(); m++) {
       if (iso.equals(shape.getChild(m).getName())) {
         pos = geo.getCentroid(shape.getChild(m));

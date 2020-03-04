@@ -1,8 +1,10 @@
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 import http.requests.*;
+import processing.core.*;
 
-Stage s = new Stage(1280, 60, false, "/waterfall/processing/");
+
+Stage s = new Stage(1280, 30, false, "/waterfall/processing/");
 
 // worldometer.info
 String spreadsheetId = "1qa-nSAq4Y_yn_MN3-cjMIs8qxtwnUNtg-xIvtMB-gtU";
@@ -15,7 +17,7 @@ Map2 map = new Map2 ();
 //PFont font;
 //StringDict sheetMeta;
 public void settings () {
-  size (s.width, s.height, P3D);
+  size (s.width, s.height);
 }
 void setup () {
   colorMode(HSB, 360, 100, 100, 100);
@@ -33,7 +35,7 @@ void setup () {
   caseLoader.load ("https://sheets.googleapis.com/v4/spreadsheets/"+spreadsheetId+"/values/A1:K1000?key="+key[0]);
   caseTable = caseLoader.table;
   caseToll = caseLoader.toll;
-  caseLoader.setTimer ("0:30");
+  caseLoader.setTimer ("2:00");
   //caseTable = caseLoader.load("data/cases.json");
   //StringDict = caseLoader.loadMedaData (metaURL);
   map.attachMap("map.svg");
@@ -45,14 +47,14 @@ void setup () {
 void draw () {
   // must-have
   scale(map.scale);
-  translate(0, -80);
+  translate(0, 0); // 0, -80
   background(19);
   // check data
   // if (caseLoade.timer.cycle * caseLoader.timer.duration > )
   if (caseLoader.timer.changed ) {
     //updateInfo(caseLoader.timer.currentCut);
     print("cut - ", caseLoader.timer.totalCuts);
-    println(" -> ", caseLoader.timer.currentCut);
+    println(" -> ", caseLoader.timer.currentCut, "/", caseLoader.timer.cycle);
     // push ani.to class.
     map.updateView(caseLoader.timer.currentCut);
   }
