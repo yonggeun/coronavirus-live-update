@@ -7,21 +7,21 @@ Deaths","Active
 Cases","Total
 Recovered","Serious,
 Critical",iso
-China,80558,149,3042,30,23731,53785,5737,CN
+China,80559,150,3042,30,23588,53929,5737,CN
 S. Korea,6593,309,42,0,6416,135,52,KR
 Italy,3858,0,148,0,3296,414,351,IT
 Iran,3513,0,108,0,2666,739,,IR
-Diamond Princess,696,0,6,0,478,212,,DP
-Germany,545,0,0,0,528,17,2,DE
+Diamond Princess,696,0,6,0,478,212,34,DP
+Germany,555,10,0,0,538,17,2,DE
 France,423,0,7,0,404,12,23,FR
-Japan,364,0,6,0,315,43,29,JP
-Spain,282,0,3,0,276,3,7,ES
+Japan,381,17,6,0,332,43,29,JP
+Spain,329,47,3,0,323,3,7,ES
 USA,233,12,14,2,210,9,8,US
-Switzerland,121,1,1,0,117,3,,CH
+Switzerland,122,2,1,0,118,3,,CH
 Singapore,117,0,0,0,36,81,7,SG
 UK,116,0,1,0,97,18,,UK
 Hong Kong,105,0,2,0,66,37,6,HK
-Norway,96,2,0,0,96,,,NO
+Norway,101,7,1,1,99,1,,NO
 Sweden,94,0,0,0,93,1,,SE
 Netherlands,82,0,0,0,82,0,1,NL
 Australia,60,0,2,0,36,22,1,AU
@@ -31,12 +31,12 @@ Malaysia,55,0,0,0,33,22,,MY
 Belgium,50,0,0,0,49,1,1,BE
 Canada,48,11,0,0,40,8,1,CA
 Thailand,47,0,1,0,15,31,1,TH
+Austria,47,4,0,0,45,2,1,AT
 Taiwan,44,0,1,0,31,12,,TW
-Austria,43,0,0,0,41,2,1,AT
-Iraq,36,0,3,0,33,,,IQ
+Iraq,40,0,3,0,37,,,IQ
 Iceland,35,0,0,0,35,,,IS
 Greece,31,0,0,0,31,,,GR
-India,30,0,0,0,27,3,,IN
+India,31,1,0,0,28,3,,IN
 UAE,28,0,0,0,23,5,2,AE
 San Marino,21,0,1,0,20,0,3,SM
 Denmark,20,0,0,0,19,1,,DK
@@ -45,10 +45,10 @@ Israel,17,0,0,0,15,2,,IL
 Lebanon,16,0,0,0,16,0,1,LB
 Oman,16,0,0,0,14,2,,OM
 Vietnam,16,0,0,0,0,16,,VN
+Finland,15,3,0,0,14,1,,FI
 Ecuador,13,0,0,0,13,0,1,EC
 Ireland,13,0,0,0,13,,,IE
 Czechia,12,0,0,0,12,,,CZ
-Finland,12,0,0,0,11,1,,FI
 Macao,10,0,0,0,1,9,,MO
 Croatia,10,0,0,0,10,,,HR
 Georgia,9,0,0,0,9,0,1,GE
@@ -59,11 +59,11 @@ Palestine,7,0,0,0,7,,,PS
 Azerbaijan,6,0,0,0,6,,,AZ
 Belarus,6,0,0,0,6,,,BY
 Mexico,6,0,0,0,5,1,,MX
+Pakistan,6,1,0,0,6,,,PK
 Romania,6,0,0,0,5,1,,RO
 Slovenia,6,0,0,0,6,,,SI
 Philippines,5,2,1,0,2,2,1,PH
 Estonia,5,0,0,0,5,,,EE
-Pakistan,5,0,0,0,5,,,PK
 Saudi Arabia,5,0,0,0,4,1,,SA
 New Zealand,4,0,0,0,4,,,NZ
 Russia,4,0,0,0,2,2,,RU
@@ -92,8 +92,11 @@ Sri Lanka,1,0,0,0,0,1,,LK
 Tunisia,1,0,0,0,1,,,TN
 Ukraine,1,0,0,0,1,,,UA
 Bhutan,1,1,0,0,1,,,BT
+Cameroon,1,1,0,0,1,,,CM
 Costa Rica,1,0,0,0,1,,,CR
 Gibraltar,1,0,0,0,1,,,
+Holy See,1,1,0,0,1,,,
 Liechtenstein,1,0,0,0,1,,,LI
 Poland,1,0,0,0,1,,,PL
+Serbia,1,1,0,0,1,,,RS
 South Africa,1,0,0,0,1,,,ZA

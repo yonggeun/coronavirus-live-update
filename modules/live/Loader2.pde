@@ -2,10 +2,11 @@ class Loader2 { //<>//
   String url;
   String status;
   String type;
-  int[] toll;
+  float[] toll;
   Table table;
   JSONObject isoList;
   Timer timer;
+  Boolean loaded;
   //
   StringDict meta;
   Loader2 (String _dataType) {
@@ -32,6 +33,7 @@ class Loader2 { //<>//
   void loadMetaData (String Link) {
   }
   void loadSheetData (String Link) {
+    loaded = false;
     JSONObject _job;
     //Table _table;
     url = Link;
@@ -53,6 +55,7 @@ class Loader2 { //<>//
     JSONArray _jarray = _job.getJSONArray("values");
     //
     table = getTable (_jarray);
+    loaded = true;
   }
   Table getTable (JSONArray J) {
     // | 0               | 1            | 2          | 3            | 4           | 5            | 6               | 7                  | 8
@@ -64,18 +67,18 @@ class Loader2 { //<>//
       //println("T.addColumn(J.getJSONArray(0).getString(k)) : ", J.getJSONArray(0).getString(k));
     }
     T.addColumn("iso");
-    toll = new int[T.getColumnCount()]; // total 9
+    toll = new float[T.getColumnCount()]; // total 9
     for (int i = 1; i < J.size()-1; i++) {
       TableRow TR = T.addRow();
       //0 country
       TR.setString(0, J.getJSONArray(i).getString(0));
-      print("J.getJSONArray(i).getString(0) : ", J.getJSONArray(i).getString(0));
+      //print("J.getJSONArray(i).getString(0) : ", J.getJSONArray(i).getString(0));
       for (int j = 1; j < T.getColumnCount()-1; j++) {
         int result;
         if (J.getJSONArray(i).isNull(j) == false) {
           result = parseNumber (J.getJSONArray(i).getString(j));
           TR.setInt(j, result);
-          toll[j] += TR.getInt(j);
+          toll[j] += TR.getFloat(j);
         } else {
           result = -1;
           toll[j] += 0;
@@ -83,14 +86,18 @@ class Loader2 { //<>//
       }
       //8 iso
       TR.setString(T.getColumnCount()-1, getISOFromName(isoList, J.getJSONArray(i).getString(0)));
-      println("  ------------------------- ", getISOFromName(isoList, J.getJSONArray(i).getString(0)));
+      //println(J.getJSONArray(i).getString(0), "\t\t\t\t", getISOFromName(isoList, J.getJSONArray(i).getString(0)));
+      if (getISOFromName(isoList, J.getJSONArray(i).getString(0)).equals("") 
+        || getISOFromName(isoList, J.getJSONArray(i).getString(0)) == null) {
+        println(J.getJSONArray(i).getString(0), "has no name");
+      }
     }
     toll[0] = T.getRowCount();
-    println(toll);
-    saveTable(T, "data/T.csv");
+    //println(toll);
+    saveTable(T, "data/"+str(year())+nf(month(),2)+nf(day(),2)+nf(hour(),2)+nf(minute(),2)+".csv");
     return T;
   }
-  void setTimer (String _duration) {
+  void setTimer (float _duration) {
     timer = new Timer (_duration, table.getRowCount()-1);
   }
   int parseDate (String D) {

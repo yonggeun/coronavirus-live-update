@@ -86,4 +86,11 @@ class Zote {
   //    }
   //  }
   //}
+  // county bounding box based on the size of today's new case
+  //fill(0, 0, 100, 100);
+  //    strokeWeight(0);
+  //    stroke(0, 0, 100, 100);
+  //    float side = map(table.getRow(_now).getInt(2), 0, toll[2], 0, cell);
+  //    rect(bboxX-cell/2, bboxY-cell/2, -side, side);
+  
 }

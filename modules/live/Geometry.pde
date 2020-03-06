@@ -21,7 +21,6 @@ class Geometry {
       right = (s.getVertex(i).x > right) ? s.getVertex(i).x : right;
     }
     //println ("right", right);
-
     return right;
   }
   float getLeft (PShape s) {
@@ -54,8 +53,28 @@ class Geometry {
     //println ("left", left);
     return bottom;
   }
-  float getW (PShape s) {
+  float getXmin (PShape s) {
     PVector centroid;
+    float[] xray = new float[s.getVertexCount()];
+    float[] yray = new float[s.getVertexCount()];
+    float xsum = 0.0;
+    float ysum = 0.0;
+    for (int k = 0; k < s.getVertexCount(); k++) {
+      //println(s.getVertex(k).x, s.getVertex(k).y);
+      xray[k] = s.getVertex(k).x;
+      yray[k] = s.getVertex(k).y;
+      xsum += s.getVertex(k).x;
+      ysum += s.getVertex(k).y;
+    }
+    centroid = new PVector (xsum/xray.length, ysum/yray.length);
+    float xmax = max(xray);
+    float xmin = min(xray);
+    float ymax = max(yray);
+    float ymin = min(yray);
+    return xmin;
+  }
+  float getW (PShape s) {
+    PVector centroid; //<>//
     float[] xray = new float[s.getVertexCount()];
     float[] yray = new float[s.getVertexCount()];
     float xsum = 0.0;
@@ -97,6 +116,9 @@ class Geometry {
   PVector getCentroid (PShape s) {
     // for polygon
     PVector centroid;
+    if (s == null) {
+      println("the shape is null");
+    }
     float[] xray = new float[s.getVertexCount()];
     float[] yray = new float[s.getVertexCount()];
     float xsum = 0.0;

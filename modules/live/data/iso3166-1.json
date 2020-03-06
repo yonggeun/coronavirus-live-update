@@ -2,7 +2,7 @@
 	"AF": "Afghanistan",
 	"AO": "Angola",
 	"AL": "Albania",
-	"AE": "U.A.E.",
+	"AE": "UAE",
 	"AR": "Argentina",
 	"AM": "Armenia",
 	"AU": "Australia",
@@ -216,5 +216,6 @@
 	"MO": "Macao",
 	"BH": "Bahrain",
 	"SM": "San Marino",
-	"MC": "Monaco"
+	"MC": "Monaco", 
+	"UK": "UK"
 }

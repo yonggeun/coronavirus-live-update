@@ -2,28 +2,34 @@ class Timer {
   int cycle;
   int cycleDurationMS;
   int cycleDuration;
+  float intervalDuration;
   int intervalDurationMS;
   int currentCut;
   int totalCuts;
+
   Boolean changed;
   // -------------------------  frames
   int startMS;
   float currentMS;
   float totalMS = 0;
   int fps;
-  Timer (String _duration, int _cuts) {
+  Timer (float _duration, int _cuts) {
+    intervalDuration = 0;
     currentCut = 0;
     cycleDuration = 0;
     cycleDurationMS = 0;
     changed = false;
     totalCuts = _cuts;
-    String[] __duration = split(_duration, ':');
-    for (int i = 0; i < __duration.length; i++) {
-      cycleDuration += int(int(__duration[__duration.length-1-i])*pow(60, i));
-    }
+    intervalDuration = _duration;
+    //String[] __duration = split(_duration, ':');
+    //for (int i = 0; i < __duration.length; i++) {
+    //  intervalDuration += int(int(__duration[__duration.length-1-i])*pow(60, i));
+    //}
     //println(cycleDuration);
-    cycleDurationMS = cycleDuration*1000;
-    intervalDurationMS = cycleDurationMS / _cuts;
+    intervalDurationMS = int(intervalDuration * 1000);
+    //cycleDurationMS = cycleDuration*1000;
+    cycleDurationMS = intervalDurationMS * totalCuts;
+    //intervalDurationMS = cycleDurationMS / totalCuts;
     startMS = millis();
   }
   void getCutNow() {
