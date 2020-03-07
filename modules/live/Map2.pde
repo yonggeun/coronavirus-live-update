@@ -1,4 +1,5 @@
 class Map2 { //<>// //<>//
+  String url; // the location of the map
   PShape shape;
   float scale;
   PVector pos;
@@ -53,9 +54,14 @@ class Map2 { //<>// //<>//
     strokeCap(ROUND);
     //showByLongitude = false;
   }
+  void refresh(Table T, float[] array) {
+    attachMap (url);
+    attachTable (T, array);
+  }
   // 1. Attach map
   void attachMap (String L) {
-    shape = loadShape (L);
+    url = L;
+    shape = loadShape (url);
     shape.disableStyle();
     scale = width / shape.width;
     //println(" / width (scaled) : ", shape.getWidth());
@@ -343,18 +349,19 @@ class Map2 { //<>// //<>//
     // Local Name
     String countryName = table.getRow(_now).getString(0);
     float nameWidth = textWidth(countryName);
-    if (nameWidth > 2*cell) {
-      textFont(H3, 34);
+    fill(0, 0, 100, 100);
+    textAlign(CENTER, BOTTOM);
+    if (nameWidth > 1.75*cell) {
+      textFont(H2, 28);
+      textLeading(26);
+      countryName = getDoublelineString (table.getRow(_now).getString(0));
     } else {
       textFont(H2, 34);
     }
-    fill(0, 0, 100, 100);
-    textAlign(CENTER, BOTTOM);
-    textFont(H2, 34);
     if (wh < cell*0.75) {      
-      text(table.getRow(_now).getString(0), bboxX, bboxY-(cell/2));
+      text(countryName, bboxX, bboxY-(cell/2));
     } else {
-      text(table.getRow(_now).getString(0), bboxX, bboxY-(h/2));
+      text(countryName, bboxX, bboxY-(h/2));
     }
     // pushMatrix in -------------
     pushMatrix();
@@ -562,5 +569,62 @@ class Map2 { //<>// //<>//
       X = -1*x;
     }
     return X;
+  }
+  String getDoublelineString (String N) {
+    String[] R;
+    String result;
+    String[] lines = split(N, ' ');
+    int tally;
+    float middle;
+    int index;
+    R = new String[2];
+    R[0] = "";
+    R[1] = "";
+    if (lines.length > 2) {
+      tally = 0;
+      middle = N.length() / 2;
+      //println("N.length; ", N.length(), " / ", N.length()/2); 
+      index = floor(middle);
+      //println("index; ", index);
+      for (int i = 0; i < lines.length; i++) {
+        tally += lines[i].length() + 1;
+        int diff = abs (floor(middle) - tally);
+        if (diff < index) {
+          index = i;
+        } else {
+          //index = index;
+          index = index-1;
+        }
+        //print(i);
+      }
+      tally = 0;
+      for (int i = lines.length-1; i > -1; i--) {
+        tally += lines[i].length()+1;
+        int diff = abs (floor(middle) - tally);
+        if (diff < index) {
+          index = i;
+        } else {
+          //index = index;
+          index = index+1;
+        }
+        //print(i);
+      }
+      for (int k = 0; k < index+1; k++) {
+        R[0] += lines[k] + ' ';
+      }
+      for (int k = index+1; k < lines.length; k++) {
+        R[1] += lines[k] + ' ';
+      }
+      R = trim(R);
+      result = join(R, '\n');
+    } else if (lines.length == 2) {
+      R[0] = lines[0];
+      R[1] = lines[1];
+      R = trim(R);
+      result = join(R, '\n');
+    } else {
+      result = N;
+    }
+    return result;
   }
 }

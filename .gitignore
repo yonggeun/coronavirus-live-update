@@ -8,3 +8,8 @@ application.windows32
 application.windows64
 application.macosx
 out
+#priavate files
+*.key
+#design files
+*.ai
+#google files

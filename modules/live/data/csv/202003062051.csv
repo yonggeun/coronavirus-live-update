@@ -1,0 +1,103 @@
+"Country,
+Other","Total
+Cases","New
+Cases","Total
+Deaths","New
+Deaths","Active
+Cases","Total
+Recovered","Serious,
+Critical",iso
+China,80559,150,3042,30,23588,53929,5737,CN
+S. Korea,6593,309,42,0,6416,135,52,KR
+Iran,4747,1234,124,16,3710,913,,IR
+Italy,3858,0,148,0,3296,414,351,IT
+Diamond Princess,696,0,6,0,478,212,34,DP
+Germany,577,32,0,0,560,17,8,DE
+France,423,0,7,0,404,12,23,FR
+Japan,381,17,6,0,332,43,29,JP
+Spain,360,78,5,2,352,3,9,ES
+USA,233,12,14,2,210,9,8,US
+Switzerland,138,18,1,0,134,3,,CH
+Singapore,130,13,0,0,49,81,7,SG
+UK,116,0,1,0,97,18,,UK
+Belgium,109,59,0,0,108,1,1,BE
+Norway,106,12,0,0,105,1,,NO
+Hong Kong,105,0,2,0,66,37,6,HK
+Sweden,101,7,0,0,100,1,,SE
+Malaysia,83,28,0,0,61,22,,MY
+Netherlands,82,0,1,1,81,0,1,NL
+Australia,60,0,2,0,36,22,1,AU
+Kuwait,58,0,0,0,58,,,KW
+Bahrain,55,0,0,0,51,4,,BH
+Canada,48,11,0,0,40,8,1,CA
+Thailand,47,0,1,0,15,31,1,TH
+Austria,47,4,0,0,45,2,1,AT
+Greece,45,14,0,0,45,,,GR
+Taiwan,44,0,1,0,28,15,,TW
+Iraq,40,0,3,0,37,,,IQ
+Iceland,37,2,0,0,37,,,IS
+India,31,1,0,0,28,3,,IN
+UAE,28,0,0,0,23,5,2,AE
+Denmark,23,3,0,0,22,1,,DK
+San Marino,21,0,1,0,20,0,3,SM
+Algeria,17,0,0,0,17,,,DZ
+Israel,17,0,0,0,15,2,,IL
+Lebanon,16,0,0,0,16,0,1,LB
+Oman,16,0,0,0,14,2,,OM
+Vietnam,16,0,0,0,0,16,,VN
+Egypt,15,12,0,0,14,1,,EG
+Finland,15,3,0,0,14,1,,FI
+Ecuador,13,0,0,0,13,0,1,EC
+Ireland,13,0,0,0,13,,,IE
+Czechia,12,0,0,0,12,,,CZ
+Macao,10,0,0,0,1,9,,MO
+Croatia,10,0,0,0,10,,,HR
+Estonia,10,5,0,0,10,,,EE
+Georgia,9,0,0,0,9,0,1,GE
+Portugal,9,0,0,0,9,,,PT
+Brazil,8,0,0,0,8,,,BR
+Qatar,8,0,0,0,8,,,QA
+Romania,8,2,0,0,3,5,,RO
+Palestine,7,0,0,0,7,,,PS
+Azerbaijan,6,0,0,0,6,,,AZ
+Belarus,6,0,0,0,6,,,BY
+Mexico,6,0,0,0,5,1,,MX
+Pakistan,6,1,0,0,6,,,PK
+Slovenia,6,0,0,0,6,,,SI
+Philippines,5,2,1,0,2,2,1,PH
+Saudi Arabia,5,0,0,0,4,1,,SA
+Indonesia,4,2,0,0,4,,,ID
+New Zealand,4,0,0,0,4,,,NZ
+Russia,4,0,0,0,2,2,,RU
+Senegal,4,0,0,0,4,,,SN
+Chile,4,0,0,0,4,,,CL
+Hungary,4,0,0,0,4,,,HU
+Luxembourg,2,0,0,0,2,,,LU
+Morocco,2,0,0,0,2,0,1,MA
+Argentina,2,0,0,0,2,,,AR
+Bosnia and Herzegovina,2,0,0,0,2,,,BA
+Afghanistan,1,0,0,0,1,,,AF
+Andorra,1,0,0,0,1,,,AD
+Armenia,1,0,0,0,1,,,AM
+Cambodia,1,0,0,0,0,1,,KH
+Dominican Republic,1,0,0,0,1,,,DO
+Jordan,1,0,0,0,1,,,JO
+Latvia,1,0,0,0,0,1,,LV
+Lithuania,1,0,0,0,1,,,LT
+North Macedonia,1,0,0,0,1,,,MK
+Monaco,1,0,0,0,1,,,MC
+Nepal,1,0,0,0,0,1,,NP
+Nigeria,1,0,0,0,1,,,NG
+Sri Lanka,1,0,0,0,0,1,,LK
+Tunisia,1,0,0,0,1,,,TN
+Ukraine,1,0,0,0,1,,,UA
+Bhutan,1,1,0,0,1,,,BT
+Cameroon,1,1,0,0,1,,,CM
+Costa Rica,1,0,0,0,1,,,CR
+Gibraltar,1,0,0,0,1,,,
+Holy See,1,1,0,0,1,,,
+Liechtenstein,1,0,0,0,1,,,LI
+Poland,1,0,0,0,1,,,PL
+Serbia,1,1,0,0,1,,,RS
+Slovakia,1,1,0,0,1,,,SK
+South Africa,1,0,0,0,1,,,ZA

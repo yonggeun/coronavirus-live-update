@@ -19,6 +19,12 @@ class Loader2 { //<>//
       break;
     }
   }
+  void refresh(Table T, float[] array) {
+    isoList = loadISOList ("data/iso3166-1.json");
+    loadSheetData (url);
+    T = table;
+    array = toll;
+  }
   void load (String Link) {
     switch (type) {
     case "data":
@@ -94,7 +100,7 @@ class Loader2 { //<>//
     }
     toll[0] = T.getRowCount();
     //println(toll);
-    saveTable(T, "data/"+str(year())+nf(month(),2)+nf(day(),2)+nf(hour(),2)+nf(minute(),2)+".csv");
+    saveTable(T, "data/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+".csv");
     return T;
   }
   void setTimer (float _duration) {
@@ -117,7 +123,6 @@ class Loader2 { //<>//
     }
     return number;
   }
-
   JSONObject loadISOList (String url) {
     JSONObject _job;
     _job = loadJSONObject (url);

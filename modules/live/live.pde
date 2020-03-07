@@ -34,7 +34,7 @@ void setup () {
   caseTable = caseLoader.table;
   caseToll = caseLoader.toll;
   // set timer in seconds
-  caseLoader.setTimer (8);
+  caseLoader.setTimer (1); //8
   map.showByLongitude = true;
   map.attachMap("map.svg");
   map.attachTable(caseTable, caseToll);
@@ -49,9 +49,10 @@ void draw () {
   // check data
   // if (caseLoade.timer.cycle * caseLoader.timer.duration > )
   map.render(caseLoader.timer.currentCut);
+  map.updateView(caseLoader.timer.currentCut);
   if (caseLoader.timer.changed ) {
     if (caseLoader.timer.currentCut == 0) {
-      print("Cycle ",nf(caseLoader.timer.cycle, 5), " done. ");
+      print("Cycle ", nf(caseLoader.timer.cycle, 5), " done. ");
       if (caseLoader.timer.cycle % 5 == 0) {
         print("\nDATA REFRESH\n");
       }
@@ -64,12 +65,14 @@ void draw () {
     // push ani.to class.
     // Reload the data every 8th cycle. 
     if (caseLoader.timer.cycle % 5 == 0 && caseLoader.timer.currentCut == 0) {
-      caseLoader.load ("https://sheets.googleapis.com/v4/spreadsheets/"+spreadsheetId+"/values/A1:K1000?key="+key[0]);
-      caseTable = caseLoader.table;
-      caseToll = caseLoader.toll;
+      //caseLoader.load ("https://sheets.googleapis.com/v4/spreadsheets/"+spreadsheetId+"/values/A1:K1000?key="+key[0]);
+      caseLoader.refresh(caseTable, caseToll);
+      //caseTable = caseLoader.table;
+      //caseToll = caseLoader.toll;
       map.attachTable(caseTable, caseToll);
+      map.refresh(caseTable, caseToll);
     }
-    map.updateView(caseLoader.timer.currentCut);
+    //map.updateView(caseLoader.timer.currentCut);
   }
   caseLoader.timer.update();
   s.render();
