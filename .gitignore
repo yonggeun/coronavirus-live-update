@@ -8,3 +8,12 @@ application.windows32
 application.windows64
 application.macosx
 out
+#folders
+font/
+LOG-CSV/
+LOG-JSON/
+#priavate files
+*.key
+#design files
+*.ai
+#google files

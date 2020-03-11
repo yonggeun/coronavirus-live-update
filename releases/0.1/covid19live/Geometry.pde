@@ -1,4 +1,4 @@
-class Geometry { //<>// //<>//
+class Geometry { //<>//
   Boolean xray;
   Geometry() {
     xray = false;
