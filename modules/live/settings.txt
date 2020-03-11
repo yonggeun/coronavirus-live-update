@@ -1,4 +1,0 @@
-;updateInterval (float, second)
-8.0
-;spreadsheetID
-1qa-nSAq4Y_yn_MN3-cjMIs8qxtwnUNtg-xIvtMB-gtU

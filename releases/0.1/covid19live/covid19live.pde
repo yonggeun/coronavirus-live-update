@@ -99,20 +99,19 @@ void draw () {
   if (timer.changed ) {
     if (timer.currentCut == 0) {
       print("Cycle ", nf(timer.cycle, 5), " done. ");
-      settings.reload();
-      if (settings.loaded) {
-        interval = settings.getFloat("interval", interval);
-        updateCycle = int (settings.getFloat("updateCycle", updateCycle));
-        spreadsheetId = settings.getString("spreadsheetId", spreadsheetId);
-        mapurl = settings.getString("mapurl", mapurl);
-        isourl = settings.getString("isourl", isourl);
-        inTraining = settings.getString("inTraining", inTraining);
-        showByLongitude = settings.getString("showByLongitude", showByLongitude);
-      }
       if (timer.cycle % updateCycle == 0) {
         print("\nDATA REFRESH\n");
         // BEGINNING of REFREST
-
+        settings.reload();
+        if (settings.loaded) {
+          interval = settings.getFloat("interval", interval);
+          updateCycle = int (settings.getFloat("updateCycle", updateCycle));
+          spreadsheetId = settings.getString("spreadsheetId", spreadsheetId);
+          mapurl = settings.getString("mapurl", mapurl);
+          isourl = settings.getString("isourl", isourl);
+          inTraining = settings.getString("inTraining", inTraining);
+          showByLongitude = settings.getString("showByLongitude", showByLongitude);
+        }
         caseLoader.refresh();
         map.updatedOn= caseLoader.updatedOn;
         map.showByLongitude = boolean(showByLongitude); 

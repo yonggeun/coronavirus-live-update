@@ -72,7 +72,7 @@ class Loader2 { //<>//
         _job = loadJSONObject ("data/LOG-JSON/latest.json");
       }
       saveJSONObject (_job, "data/LOG-JSON/latest.json");
-      //saveJSONObject (_job, "data/LOG-JSON/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".json");
+      saveJSONObject (_job, "data/LOG-JSON/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".json");
     } else {
       // the link is local file
       _job = loadJSONObject (Link);
@@ -158,7 +158,7 @@ class Loader2 { //<>//
     toll.set(T.getColumnTitle(0), T.getRowCount());
     toll.set(T.getColumnTitle(T.getColumnCount()-1), T.getRowCount());
     //println(toll);
-    //saveTable(T, "data/LOG-CSV/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".csv");
+    saveTable(T, "data/LOG-CSV/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".csv");
     return T;
   }
   processing.data.JSONObject loadISOList (String URL) {

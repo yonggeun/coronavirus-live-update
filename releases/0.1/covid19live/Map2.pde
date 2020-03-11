@@ -54,10 +54,10 @@ class Map2 { //<>// //<>//
     H1 = createFont("font/Roboto Slab 700.ttf", 30);
     H2 = createFont("font/Roboto Condensed 700.ttf", 100);
     H3 = createFont("font/Roboto Condensed regular.ttf", 100);
-    ////H2 = loadFont("font/R-CB.vlw");
+    ////H2 = loadFont("R-CB.vlw");
     ////H2 = createFont("font/Roboto Condensed 700.ttf", 100);
-    ////H3 = loadFont("font/R-L.vlw"); // roboto condensed light
-    ////H3 = loadFont("font/R-C.vlw"); // roboto condensed regular
+    ////H3 = loadFont("R-L.vlw"); // roboto condensed light
+    ////H3 = loadFont("R-C.vlw"); // roboto condensed regular
     cell = width/9;
     strokeJoin(ROUND);
     strokeCap(ROUND);
@@ -397,7 +397,6 @@ class Map2 { //<>// //<>//
     // COUNTRY INFORMATION  -------------------------  ------------------------- //
     // Local Name
     String countryName = table.getRow(_now).getString(0);
-    //println(countryName);
     float nameWidth = textWidth(countryName);
     fill(0, 0, 100, 100);
     textAlign(CENTER, BOTTOM);
