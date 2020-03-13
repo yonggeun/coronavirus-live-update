@@ -1,17 +1,24 @@
-class Loader2 { //<>//
+class Loader {
   String url;
   String isourl;
   String status;
   String type;
-  int updatedOn;
+
   FloatDict toll;
   Table table;
+
   processing.data.JSONObject isoList;
   Boolean loaded;
-  //Sentinel sentinel;
+
   //
+  int updatedOn;
+  String jsonDate;
+  Boolean worldometerAccessible;
+
+
+  //Sentinel sentinel;
   StringDict meta;
-  Loader2 (String _dataType) {
+  Loader (String _dataType) {
     switch (_dataType) {
     case "data":
       type = "data";
@@ -24,6 +31,7 @@ class Loader2 { //<>//
   }
 
   void load (String Link, String ISOURL) {
+    worldometerAccessible = false;
     switch (type) {
     case "data":
       isoList = loadISOList (ISOURL);
@@ -33,11 +41,13 @@ class Loader2 { //<>//
       loadMetaData (Link);
       break;
     }
+    updatedOn = getUpdatedOn();
   }
 
   void refresh () {
     isoList = loadISOList (isourl);
     loadSheetData (url);
+    updatedOn = getUpdatedOn();
   }
 
   //void refresh2 (Table T, float[] array) {
@@ -50,7 +60,6 @@ class Loader2 { //<>//
   void loadMetaData (String Link) {
   }
   void loadSheetData (String Link) {
-    updatedOn = getUpdatedOn();
     loaded = false;
     processing.data.JSONObject _job;
     //Table _table;
@@ -63,15 +72,17 @@ class Loader2 { //<>//
       try {
         _get.send();
         _job = parseJSONObject (_get.getContent());
+        jsonDate = _get.getHeader("date");
         status = "online";
         sentinel.inform("> Success loading datasheet from google");
+        saveJSONObject (_job, "data/LOG-JSON/latest.json");
       } 
       catch (Throwable t) {
         status = "offline";
         sentinel.report(t, frameCount);
         _job = loadJSONObject ("data/LOG-JSON/latest.json");
+        //jsonDate = _get.getHeader("date");
       }
-      saveJSONObject (_job, "data/LOG-JSON/latest.json");
       //saveJSONObject (_job, "data/LOG-JSON/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".json");
     } else {
       // the link is local file
@@ -137,7 +148,7 @@ class Loader2 { //<>//
     for (int i = 1; i < J.size()-1; i++) {
       if (getISOFromName(isoList, J.getJSONArray(i).getString(0)).equals("") 
         || getISOFromName(isoList, J.getJSONArray(i).getString(0)) == null) {
-        println(J.getJSONArray(i).getString(0), "has no name");
+        //println(J.getJSONArray(i).getString(0), "has no name");
         // if there is no lable for the name give ID "**"
         isoMismatch = true;
         T.setString(i-1, "iso", "**");
@@ -153,6 +164,7 @@ class Loader2 { //<>//
       }
     }
     if (isoError != null) {
+      println ("> ISO mismatch occurred.\n" + sentinel.nowInString() + "\n" + trim(isoError));
       sentinel.inform ("> ISO mismatch occurred.\n" + sentinel.nowInString() + "\n" + trim(isoError));
     }
     toll.set(T.getColumnTitle(0), T.getRowCount());
@@ -205,33 +217,43 @@ class Loader2 { //<>//
     name = isoList.getString(isocode);
     return name;
   }
+  //int getUpdatedOn1 () {
+  //  int a = 02101230; 
+  //  return a;
+  //}
   int getUpdatedOn () {
-    String url = "https://www.worldometers.info/coronavirus/";
-    String lastUpdated;
-    String[] month = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    String url = "http://www.worldometers.info/coronavirus/";
+    String _lastUpdated;
+    //String[] month = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    String[] updated;
+    int updatedInMinute;
     // March 11, 2020, 05:10 GMT
     // Get the raw HTML source into an array of strings (each line is one element in the array).
     // The next step is to turn array into one long string with join().
-    String[] lines = loadStrings(url);
-    String html = join(lines, "");
-    String start = "id=\"page-top\">COVID-19 Coronavirus Outbreak</div><div style=\"font-size:13px; color:#999; text-align:center\">Last updated: ";
-    String end = "</div><div style=\"margin-top:20px; text-align:center; font-size:14px\"><a href=\"/coronavirus/coronavirus-cases/\">";
-    lastUpdated = giveMeTextBetween(html, start, end);
-    String[] updated = splitTokens(lastUpdated, ", :");
-    //println(updated);
-    int m = 0;
-    for (int k = 0; k < month.length -1; k++) {
-      if (month[k].equals(updated[0])) {
-        m = k+1;
-        //println("m", m);
-      }
+    try {
+      String[] lines = loadStrings(url);
+      String html = join(lines, "");
+      String start = "id=\"page-top\">COVID-19 Coronavirus Outbreak</div><div style=\"font-size:13px; color:#999; text-align:center\">Last updated: ";
+      String end = "</div><div style=\"margin-top:20px; text-align:center; font-size:14px\"><a href=\"/coronavirus/coronavirus-cases/\">";
+      _lastUpdated = giveMeTextBetween(html, start, end);
+      //March 13, 2020, 05:35 GMT
+      updated = splitTokens(_lastUpdated, ", :");
+      updatedInMinute = int(updated[4]) + int(updated[3]) * 60 + int(updated[1]) * 24*60 + 480;
+      worldometerAccessible = true;
+    } 
+    catch (Throwable t) {
+      //Fri, 13 Mar 2020 05:34:29 GMT
+      //println("JSON response header -> date : ", _get.getHeader("date"));
+      println("> http://www.worldometers.info/coronavirus/ is missing or inaccessible " + sentinel.nowInString());
+      sentinel.inform ("> http://www.worldometers.info/coronavirus/ is missing or inaccessible");
+      _lastUpdated = jsonDate;
+      updated = splitTokens(_lastUpdated, ", :");
+      updatedInMinute = int(updated[5]) + int(updated[4]) * 60 + int(updated[1]) * 24*60 + 480;
+      worldometerAccessible = false;
     }
     // calculate local update time in minute
-    int updatedInMinute = int(updated[4]) + int(updated[3]) * 60 + int(updated[1]) * 24*60 + 480;
     return updatedInMinute;
   }
-
-
   String giveMeTextBetween(String s, String before, String after) {
     // This function returns a substring between two substrings (before and after).
     //  If it can’t find anything it returns an empty string.

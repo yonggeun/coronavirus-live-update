@@ -13,7 +13,7 @@ import de.looksgood.ani.easing.*;
 import http.requests.*;
 //
 //Sketch manager
-Stage s = new Stage(1280, 30, false, "/waterfall/processing/");
+Stage s = new Stage(1280, 60, false, "/waterfall/processing/");
 // SETTING MANAGE
 Settings settings;
 String settingsFile = "settings.json";
@@ -27,14 +27,14 @@ String inTraining = "true";
 String showByLongitude  = "false";
 String[] key;
 //
-Loader2 caseLoader;
-Map2 map;
+Loader caseLoader;
+Map map;
 Timer timer;
 Sentinel sentinel;
 
 public void settings () {
-  //smooth(4);
-  size (s.width, s.height); //FX2D but this drains memory
+  smooth(4);
+  size (s.width, s.height, FX2D); //FX2D but this drains memory
 }
 void setup () {
   // REQUIREMENTS
@@ -70,7 +70,7 @@ void setup () {
   }
 
   // Data
-  caseLoader = new Loader2 ("data");
+  caseLoader = new Loader ("data");
   caseLoader.load (
     "https://sheets.googleapis.com/v4/spreadsheets/"+spreadsheetId+"/values/A1:K1000?key="+key[0], 
     isourl);
@@ -80,7 +80,7 @@ void setup () {
   timer = new Timer (interval, caseLoader.table.getRowCount()-1);
 
   // Map
-  map = new Map2 ();
+  map = new Map ();
   map.updatedOn = caseLoader.updatedOn;
   map.showByLongitude = boolean(showByLongitude); // if false, the render sequence follows the order of total case number
   map.attachMap(mapurl, isourl);
@@ -99,7 +99,7 @@ void draw () {
   // check timer
   if (timer.changed ) {
     if (timer.currentCut == 0) {
-      print("Cycle ", nf(timer.cycle, 5), " done. ");
+      print("Cycle ", nf(timer.cycle, 5), " done. " + sentinel.nowInString());
       settings.reload();
       if (settings.loaded) {
         interval = settings.getFloat("interval", interval);
@@ -111,7 +111,7 @@ void draw () {
         showByLongitude = settings.getString("showByLongitude", showByLongitude);
       }
       if (timer.cycle % updateCycle == 0) {
-        print("\nDATA REFRESH\n");
+        print("\nDATA REFRESH\n" + sentinel.nowInString());
         // BEGINNING of REFREST
         caseLoader.refresh();
         map.updatedOn = caseLoader.updatedOn;

@@ -1,4 +1,4 @@
-class Map2 { //<>// //<>//
+class Map { //<>//
   String url; // the location of the map
   PShape shape;
   float scale;
@@ -21,6 +21,7 @@ class Map2 { //<>// //<>//
   PShape local;
   //
   float cell;
+  float padding;
   float bboxX;
   float bboxXT;
   float bboxY;
@@ -43,22 +44,25 @@ class Map2 { //<>// //<>//
   color clr_local;
 
   // global rectmode must be CORNERS
-  Map2 () {
+  Map () {
     geo = new Geometry();
     // animate the variables x and y in 1.5 sec to mouse click position
+    H1 = createFont("font/Roboto Slab 700.ttf", 30);
+    H2 = createFont("font/Roboto Condensed 700.ttf", 100);
+    H3 = createFont("font/Roboto Condensed regular.ttf", 100);
+    // variable for grid system
+    cell = width/9;
+    padding = cell/20;
   }
   // 0. init
   void init() {
     colorMode (HSB, 360, 100, 100, 100);
     clr_infected = color (0, 100, 79.2, 50);
-    H1 = createFont("font/Roboto Slab 700.ttf", 30);
-    H2 = createFont("font/Roboto Condensed 700.ttf", 100);
-    H3 = createFont("font/Roboto Condensed regular.ttf", 100);
+
     ////H2 = loadFont("font/R-CB.vlw");
     ////H2 = createFont("font/Roboto Condensed 700.ttf", 100);
     ////H3 = loadFont("font/R-L.vlw"); // roboto condensed light
     ////H3 = loadFont("font/R-C.vlw"); // roboto condensed regular
-    cell = width/9;
     strokeJoin(ROUND);
     strokeCap(ROUND);
     //showByLongitude = false;
@@ -253,7 +257,7 @@ class Map2 { //<>// //<>//
       text(rn, recoveredLabelX + 10, -10);
     }
     // Recovered Label
-    textFont(H2, 20);
+    textFont(H3, 20);
     String labelRecovered = "Recovered";
     labelRecovered += "\n";
     labelRecovered += str(float(round(toll.get("Total Recovered")/toll.get("Total Cases")*10000)/100)) +"%";
@@ -282,7 +286,7 @@ class Map2 { //<>// //<>//
     }
     // Death label
     fill(0, 0, 100, 100);
-    textFont(H2, 20);
+    textFont(H3, 20);
     String labelDeaths = "Deaths";
     labelDeaths += "\n";
     labelDeaths += str(deathRate) +"%";
@@ -316,15 +320,18 @@ class Map2 { //<>// //<>//
       line (0, todaySide, cell*-0.5, todaySide);
     }
     // today header
-    String headerToday = "Today";
-    textFont(H2, 20);
+    int lastUpdate;
+    lastUpdate = (hour() - 8 > 0) ? hour() - 8 : 24 + hour() - 8;
+    String headerToday = "Last\n"+ lastUpdate +" hours";
+    textFont(H3, 18);
+    textLeading(20);
     fill(0, 0, 100, 100);
     if (TA == 0) {
-      textAlign (LEFT, BOTTOM);
-      text (headerToday, cell*2 + 10, todaySide - 10);
-    } else {      
       textAlign (RIGHT, BOTTOM);
-      text (headerToday, -10, todaySide - 10);
+      text (headerToday, cell*2.5 - padding/2, todaySide - padding/2);
+    } else {      
+      textAlign (LEFT, BOTTOM);
+      text (headerToday, -cell/2 + padding/2, todaySide - padding/2);
     }
     // today number 
     textFont(H2, 32);
@@ -428,14 +435,15 @@ class Map2 { //<>// //<>//
     // TODAY
     // TODAY label
     fill(0, 0, 100, 100);
-    String localLabelToday = "Today";
-    textFont(H3, 24);
+    String localLabelToday = "Last "+ lastUpdate +" hrs.";
+    //String headerToday = "Last\n"+ lastUpdate +" hrs";
+    textFont(H3, 18);
     if (TA == 0) {
       textAlign(LEFT, BOTTOM);
     } else {
       textAlign(RIGHT, BOTTOM);
     }
-    text(localLabelToday, gf(TA, -cell*1.5+10), -cell/2); 
+    text(localLabelToday, gf(TA, -cell*1.5-padding*6), -cell/2-padding/2); 
     // RECT
     fill(clr_local);
     //fill(hue(clr_local), 
@@ -472,15 +480,15 @@ class Map2 { //<>// //<>//
       textAlign(RIGHT, TOP);
     }
     textFont(H3, 32);
-    text(localNumberTodayCases, gf(TA, -cell*1.5 + 10), -cell/2+10);
+    text(localNumberTodayCases, gf(TA, -cell*1.5 + padding), -cell/2+padding);
     //// number local deaths today
     String localNumberTodayDeaths = nfc(table.getRow(_now).getInt(4));
-    text(localNumberTodayDeaths, gf(TA, -cell*1.5 + 10), 10);
+    text(localNumberTodayDeaths, gf(TA, -cell*1.5 + padding), padding);
     // label local cases today
     textFont(H2, 17);
-    text("New Cases", gf(TA, -cell*1.5 + 10), -cell/2 + 42);
+    text("New Cases", gf(TA, -cell*1.5 + padding), -cell/2 + 42);
     // label local deaths today
-    text("New Deaths", gf(TA, -cell*1.5 + 10), 42);
+    text("New Deaths", gf(TA, -cell*1.5 + padding), 42);
     //
     if (TA == 0) {
       textAlign(LEFT, BOTTOM);
@@ -490,11 +498,11 @@ class Map2 { //<>// //<>//
     //// number local total cases
     textFont(H2, 32);
     String localNumberTotalCases = nfc(table.getRow(_now).getInt(1));
-    text(localNumberTotalCases, gf(TA, -cell*1.5+10), cell*0.75 + 10);
+    text(localNumberTotalCases, gf(TA, -cell*1.5+padding), cell*0.75 + padding);
     //// number local total deaths
     textFont(H2, 25);
     String localNumberTotalDeaths = nfc(table.getRow(_now).getInt(3));
-    text(localNumberTotalDeaths, gf(TA, -cell*0.5), cell*0.75 + 10);
+    text(localNumberTotalDeaths, gf(TA, -cell*0.5), cell*0.75 + padding);
     if (TA == 0) {
       textAlign(RIGHT, BOTTOM);
     } else {
@@ -504,7 +512,7 @@ class Map2 { //<>// //<>//
     fill(0, 100, 100, 100);
     // labelRecovered += str(float(round(toll[6]/toll[1]*10000)/100)) +"%";
     String localNumberDeathRate = str(float(round(table.getRow(_now).getFloat(3) / table.getRow(_now).getFloat(1) * 10000)/100)) + "%";
-    text(localNumberDeathRate, gf(TA, cell*0.5), cell*0.75 + 10);
+    text(localNumberDeathRate, gf(TA, cell*0.5), cell*0.75 + padding);
     // LABELS
     textFont(H3, 17);
     if (TA == 0) {
@@ -514,9 +522,9 @@ class Map2 { //<>// //<>//
     }
     fill(0, 0, 100, 100);
     //// label local total cases
-    text("Total Cases", gf(TA, -cell*1.5 + 10), cell-10);
+    text("Total Cases", gf(TA, -cell*1.5 + padding), cell-padding);
     //// label local total deaths
-    text("Total Deaths", gf(TA, -cell*0.5), cell-10);
+    text("Total Deaths", gf(TA, -cell*0.5), cell-padding);
     //// label local total rate
     if (TA == 0) {
       textAlign(RIGHT, BOTTOM);
@@ -524,7 +532,7 @@ class Map2 { //<>// //<>//
       textAlign(LEFT, BOTTOM);
     }
     fill(0, 100, 100, 100);
-    text("Rate", gf(TA, cell*0.5), cell-10);
+    text("Rate", gf(TA, cell*0.5), cell-padding);
 
     popMatrix();
     // popMatrix out -------------
@@ -546,40 +554,38 @@ class Map2 { //<>// //<>//
     // update information
     textAlign (RIGHT, TOP);
     textFont(H3, 18);
-    text(getLastUpdateInfo(), width-10, 10);
+    text(getLastUpdateInfo(), width-padding, padding);
   }
   void updateView(int _cut) {
-    if (displayMode == '<') {
-      tollboxXT = 20;
-      //tollboxYT = height/2-cell;
-      tollboxYT = height - cell*2.5 - 10;
-    } else {
-      tollboxXT = width/2 + (2.5*cell) - 20;
-      //tollboxYT = height/2-cell;
-      tollboxYT = height - cell*2.5 - 10;
-    }
+    // if iso is missing 
     if (isoMissing) {
-      tollboxXT = cell*2;
-      tollboxYT = height - cell*2.5 - 10;
-    }
-    tollboxXAni = Ani.to (this, 0.5, "tollboxX", tollboxXT);
-    tollboxYAni = Ani.to (this, 0.5, "tollboxY", tollboxYT);
-
-    //
-    if (isoMissing) {
+      // set locaBoundingBox target coordinate
       bboxXT = cell*6.5;
       bboxYT = tollboxY + cell + getRectSide (toll.get("New Cases"), toll.get("Total Cases"), 2*cell);
+
+      // set tollbox target coordinate
+      tollboxXT = cell*2;
+      tollboxYT = height - cell*2.5 - padding;
     } else {
+      // set locaBoundingBox target coordinate
+      bboxXT = getCountryCentFromDatarowNO(_cut).x;
+      bboxYT = getCountryCentFromDatarowNO(_cut).y;
+
+      // set tollbox target coordinate
+      if (displayMode == '<') {
+        tollboxXT = 20;
+        tollboxYT = height - cell*2.5 - padding;
+      } else {
+        tollboxXT = width/2 + (2.5*cell) - padding*2;
+        tollboxYT = height - cell*2.5 - padding;
+      }
     }
 
-
-    if (isoMissing) {
-      bboxXAni = Ani.to (this, 1, "bboxX", cell*6.5);
-      bboxYAni = Ani.to (this, 1, "bboxY", tollboxY + cell + getRectSide (toll.get("New Cases"), toll.get("Total Cases"), 2*cell));
-    } else {
-      bboxXAni = Ani.to (this, 1, "bboxX", getCountryCentFromDatarowNO(_cut).x);
-      bboxYAni = Ani.to (this, 1, "bboxY", getCountryCentFromDatarowNO(_cut).y);
-    }
+    // init the animation 
+    tollboxXAni = Ani.to (this, 2, "tollboxX", tollboxXT);
+    tollboxYAni = Ani.to (this, 2, "tollboxY", tollboxYT);
+    bboxXAni = Ani.to (this, 2, "bboxX", bboxXT);
+    bboxYAni = Ani.to (this, 2, "bboxY", bboxYT);
   }
   // end of 3. Render
   PVector getCountryCentFromDatarowNO (int _rowNo) {
@@ -744,13 +750,23 @@ class Map2 { //<>// //<>//
   String getLastUpdateInfo () {
     int diff = passedMinuteThisMonth() - updatedOn;
     String updatedInfo = "update info unavailable";
-    if (diff < 60 && diff >= 0) {
-      updatedInfo = "updated " + diff + " min ago";
-    } else if (diff >= 60 && diff < 1440) {
-      updatedInfo = "updated " + float(round(float(diff*10) / float(60)))/10 + " hours ago";
-    } else if (diff >= 1440) {
-      updatedInfo = "updated " + float(round(float(diff*10) / float(1440)))/10 + " days ago";
-    } 
+    if (caseLoader.worldometerAccessible) { 
+      if (diff < 60 && diff >= 0) {
+        updatedInfo = "Data updated  " + diff + " min ago";
+      } else if (diff >= 60 && diff < 1440) {
+        updatedInfo = "Data updated " + float(round(float(diff*10) / float(60)))/10 + " hours ago";
+      } else if (diff >= 1440) {
+        updatedInfo = "Data updated " + float(round(float(diff*10) / float(1440)))/10 + " days ago";
+      }
+    } else {
+      if (diff < 60 && diff >= 0) {
+        updatedInfo = "Data accessed " + diff + " min ago";
+      } else if (diff >= 60 && diff < 1440) {
+        updatedInfo = "Data accessed  " + float(round(float(diff*10) / float(60)))/10 + " hours ago";
+      } else if (diff >= 1440) {
+        updatedInfo = "Data accessed  " + float(round(float(diff*10) / float(1440)))/10 + " days ago";
+      }
+    }
     return updatedInfo;
   }
 
