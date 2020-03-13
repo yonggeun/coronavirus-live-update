@@ -1,9 +1,0 @@
-{
-    "interval": 3,
-    "updateCycle": 3,
-    "spreadsheetId" : "1qa-nSAq4Y_yn_MN3-cjMIs8qxtwnUNtg-xIvtMB-gtU",
-    "mapurl" : "map.svg",
-    "isourl" : "data/iso3166-1.json",
-    "inTraining" : "true",
-    "showByLongitude" : "true"
-}
