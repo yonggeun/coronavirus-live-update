@@ -87,6 +87,7 @@ void setup () {
   map.attachTable(caseLoader.table, caseLoader.toll);
 }
 void draw () {
+  clear();
   // REQUIREMENTS
   // scale(map.scale);
   // translate(0, 0); // 0, -80
@@ -112,9 +113,8 @@ void draw () {
       if (timer.cycle % updateCycle == 0) {
         print("\nDATA REFRESH\n");
         // BEGINNING of REFREST
-
         caseLoader.refresh();
-        map.updatedOn= caseLoader.updatedOn;
+        map.updatedOn = caseLoader.updatedOn;
         map.showByLongitude = boolean(showByLongitude); 
         map.refresh(caseLoader.table, caseLoader.toll);
       }
