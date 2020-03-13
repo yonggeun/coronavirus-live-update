@@ -98,7 +98,7 @@ void draw () {
   // check timer
   if (timer.changed ) {
     if (timer.currentCut == 0) {
-      print("Cycle ", nf(timer.cycle, 5), " done. ");
+        print("Cycle ", nf(timer.cycle, 5), " done. ");
       settings.reload();
       if (settings.loaded) {
         interval = settings.getFloat("interval", interval);
@@ -113,7 +113,7 @@ void draw () {
         print("\nDATA REFRESH\n");
         // BEGINNING of REFREST
 
-        caseLoader.refresh();
+        caseLoader.refresh();      
         map.updatedOn= caseLoader.updatedOn;
         map.showByLongitude = boolean(showByLongitude); 
         map.refresh(caseLoader.table, caseLoader.toll);

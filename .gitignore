@@ -10,10 +10,14 @@ application.macosx
 out
 #folders
 font/
+*/font/
 LOG-CSV/
 LOG-JSON/
 #priavate files
 *.key
 #design files
 *.ai
+*.ttf
+*.vlw
 #google files
+*.gsheet
