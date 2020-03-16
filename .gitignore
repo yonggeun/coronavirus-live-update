@@ -13,6 +13,7 @@ font/
 */font/
 LOG-CSV/
 LOG-JSON/
+/streaming/
 streaming/
 #priavate files
 *.key
