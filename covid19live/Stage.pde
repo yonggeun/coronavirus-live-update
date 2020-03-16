@@ -33,11 +33,13 @@ class Stage {
     path = new StringDict();
     path.set("user", System.getProperty("user.dir"));
     path.set("file", getClass().getEnclosingClass().getName());
+    
+    // set your own screen capture location
     if (split(System.getProperty("os.name"), " ")[0].equals("Windows")) {
-      // windows
+      // for windows
       path.set("home", "D:\\yonggeun");
     } else { 
-      //mac
+      // for mac
       path.set("home", System.getProperty("user.home"));
     }
     path.set("sequence", path.get("home")+
