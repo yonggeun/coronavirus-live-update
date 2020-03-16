@@ -16,6 +16,7 @@ LOG-JSON/
 /streaming/
 streaming/
 map-backups/
+dev/
 #priavate files
 *.key
 #design files
