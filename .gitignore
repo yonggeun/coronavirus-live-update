@@ -15,6 +15,7 @@ LOG-CSV/
 LOG-JSON/
 /streaming/
 streaming/
+map-backups/
 #priavate files
 *.key
 #design files
