@@ -1,6 +1,6 @@
 # Coronavirus World map live for Youtube Streaming
 
-![screenshot](screenshot/TEST-2020-3-16 17-36 00015934.PNG)
+![screenshot](https://github.com/yonggeun/coronavirus-live-update/blob/master/screenshot/TEST-2020-3-16%2017-36%2000015934.PNG)
 
 ## 1. Introduction
 
