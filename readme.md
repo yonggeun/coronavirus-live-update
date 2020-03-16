@@ -4,6 +4,8 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oQbwgeEUL8k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ```
 
+[![Alt text](https://img.youtube.com/vi/oQbwgeEUL8k/0.jpg)](https://www.youtube.com/watch?v=oQbwgeEUL8k)
+
 ![screenshot](https://github.com/yonggeun/coronavirus-live-update/blob/master/screenshot/TEST-2020-3-16%2017-36%2000015934.PNG)
 
 ## 1. Introduction
