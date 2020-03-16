@@ -1,15 +1,15 @@
 # Coronavirus World map live for Youtube Streaming
 
-[![screenshot](https://github.com/yonggeun/coronavirus-live-update/blob/master/screenshot/TEST-2020-3-16%2017-36%2000015934.PNG)](https://www.youtube.com/watch?v=oQbwgeEUL8k)
+![screenshot](https://github.com/yonggeun/coronavirus-live-update/blob/master/screenshot/TEST-2020-3-16%2017-36%2000015934.PNG)
 
 ## 1. Introduction
 
-The Project implements a dashboard to display the real-time information of 2019 novel coronavirus through youtube live streaming.
+The Project implements a dashboard to display the real-time information of 2019 novel coronavirus through youtube live streaming. [Watch the live stream first.](https://www.youtube.com/watch?v=oQbwgeEUL8k)
 
-## 2. Requirement
-1. shows the number of cases, deaths from repective countries from the source [website](https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/).
-2. displays the geographical transmission of the virus.
-3. (if possible) accompanies the real-time updates from World Health Organization twitter in alphanumerical format.
+## 2. Purpose
+1. To show the number of cases, deaths from repective countries from the source [website](https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/).
+2. To display the geographical transmission of the virus.
+3. (if possible) To accompany the real-time updates from World Health Organization twitter in alphanumerical format.
 
 ## 3. Installation
 1. download processing IDE from [processing.org](https://processing.org/)
@@ -43,10 +43,10 @@ The Project implements a dashboard to display the real-time information of 2019 
 
 ## 5. Forthcoming
 
-1. [ ] twitter trends
-2. [ ] Progress graph for each territory
+1. twitter trends
+2. Progress graph for each territory
 
-## 6 Credits
+## 6. Credits
 
 1. I appreciate the following sources and websites who enormously help to make this app possible. 
    1. for twitter dm source
