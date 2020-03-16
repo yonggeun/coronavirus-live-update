@@ -1,5 +1,6 @@
 class Geometry { //<>//
   // this class is a simple helper class to return the values from PShape instances. 
+  // This class is stil in development so there must be jargons and repetitions.
   Boolean xray;
   Geometry() {
     xray = false;

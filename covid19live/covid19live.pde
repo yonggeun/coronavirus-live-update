@@ -1,3 +1,7 @@
+// The source code is under MIT licencce. 
+// Yonggeun Kim, vizualizer.com / vizualizer@gmail.com
+// 2020 16 March 2020
+
 import twitter4j.*;
 import twitter4j.util.*;
 import twitter4j.util.function.*;
@@ -21,6 +25,7 @@ Stage s = new Stage(1280, 60, false, "/waterfall/processing/");
 
 // SETTING MANAGE
 // setting class loads settings
+
 // it is not necessary to define all the setting in the json file. 
 // Only the declared option will be prioritized than the inline setting variables. 
 // e.g interval for duration for 1 single country declared as 8 sec. 
@@ -159,3 +164,6 @@ void keyPressed(KeyEvent e) {
   // if you want you can save sceenshot the save path is defined in Stage class file. 
   s.screenshot(e, "PNG");
 }
+
+// OPENSOURCE LICENCE
+// Twitter4j - http://twitter4j.org/en/index.html
