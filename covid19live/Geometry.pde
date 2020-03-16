@@ -1,4 +1,5 @@
-class Geometry { //<>// //<>//
+class Geometry { //<>//
+  // this class is a simple helper class to return the values from PShape instances. 
   Boolean xray;
   Geometry() {
     xray = false;
@@ -155,11 +156,6 @@ class Geometry { //<>// //<>//
     float xmin = min(xray);
     float ymax = max(yray);
     float ymin = min(yray);
-    //float rectSide = min(xmax-xmin, ymax-ymin);
-
-    //shape(firstCell);
-    //println(firstCell.width);
     return centroid;
-    //
   }
 }
