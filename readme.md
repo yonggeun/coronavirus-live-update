@@ -1,6 +1,6 @@
 # Coronavirus World map live for Youtube Streaming
 
-![screenshot](/screenshot/TEST-2020-3-16 17-36 00015934.PNG)
+![screenshot](screenshot/TEST-2020-3-16 17-36 00015934.PNG)
 
 ## 1. Introduction
 
@@ -10,6 +10,11 @@ The Project implements a dashboard to display the real-time information of 2019 
 1. shows the number of cases, deaths from repective countries from the source [website](https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/).
 2. displays the geographical transmission of the virus.
 3. (if possible) accompanies the real-time updates from World Health Organization twitter in alphanumerical format.
+
+### 1.2 Forthcoming
+
+1. [ ] twitter trends
+2. [ ] Progress graph for each territory
 
 ### 1.2 Data source
 
