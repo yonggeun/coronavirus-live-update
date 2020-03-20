@@ -1,4 +1,4 @@
-class Map { //<>//
+class Map2 {
   // This class really draws things on the screen
   String url;    // the location of the map.svg file 
   PShape shape;  // the wold map
@@ -23,7 +23,6 @@ class Map { //<>//
   boolean isoMissing = false; 
   int currentCountryIDonMap;
   PShape local;
-
   //
   float cell;
   float padding;
@@ -33,17 +32,6 @@ class Map { //<>//
   float bboxYT;
   Ani bboxXAni;  
   Ani bboxYAni;
-  float mapPosX;
-  float mapPosXT;
-  float mapPosY;
-  float mapPosYT;
-  Ani mapPosXAni;
-  Ani mapPosYAni;
-  //
-  float mapScale;
-  float mapScaleT;
-  Ani mapScaleAni;
-
   // -
   float tollboxX;
   float tollboxXT;
@@ -60,7 +48,7 @@ class Map { //<>//
   color clr_local;
 
   // global rectmode must be CORNERS
-  Map () {
+  Map2 () {
     geo = new Geometry();
     // animate the variables x and y in 1.5 sec to mouse click position
     H1 = createFont("font/Roboto Slab 700.ttf", 30);
@@ -81,18 +69,13 @@ class Map { //<>//
 
   // 1. Attach map
   void attachMap (String L, String L2) {
-    // load data
     url = L;
     isourl = L2;
-    isoList = loadISOList (isourl);
-
-    // shape
     shape = loadShape (url);
     shape.disableStyle();
     scale = width / shape.width;
-    mapScaleT = scale; 
     pos = new PVector ((width-shape.getWidth())/2, (height - shape.getHeight())/8);
-    mapPosXT = pos.x;
+    isoList = loadISOList (isourl);
   }
 
   // 2. Attach table
@@ -202,82 +185,12 @@ class Map { //<>//
       isoMissing = false;
       drawCurrentCountry(shape.getChild(currentCountryIDonMap), _now);
     }
-    //drawOthers();
-  }
-  void drawCurrentCountry (PShape cc, int _now) {
-    // shaping the territory
-    strokeWeight (1);
-    stroke (255);
-    fill(0, 0, 100, 100);
-    shape(cc, 0, 0);
-  }
-
-  void drawOthers () {
-    // H1 title
-    fill(0, 0, 100, 100);
-    textAlign (LEFT, TOP);
-    textFont(H1, 30);
-    text("CORONAVIRUS NOW", 20, 10);
-
-    // update detail
-    textAlign (RIGHT, TOP);
-    textFont(H3, 18);
-    text(getLastUpdateInfo(), width-padding, padding);
-  }
-
-  void updateView(int _cut) {
-    // if iso is missing 
-    if (isoMissing) {
-      // set locaBoundingBox target coordinate
-      bboxXT = cell*6.5;
-      bboxYT = tollboxY + cell + getRectSide (toll.get("New Cases"), toll.get("Total Cases"), 2*cell);
-
-      // set tollbox target coordinate
-      tollboxXT = cell*2;
-      tollboxYT = height - cell*2.5 - padding;
-    } else {
-      // set locaBoundingBox target coordinate
-      bboxXT = getCountryCentFromDatarowNO(_cut).x;
-      bboxYT = getCountryCentFromDatarowNO(_cut).y;
-
-      // set tollbox target coordinate
-      if (displayMode == '<') {
-        tollboxXT = 20;
-        tollboxYT = height - cell*2.5 - padding;
-      } else {
-        tollboxXT = width/2 + (2.5*cell) - padding*2;
-        tollboxYT = height - cell*2.5 - padding;
-      }
-    }
-
-    // init the animation 
-    tollboxXAni = Ani.to (this, 2, "tollboxX", tollboxXT);
-    tollboxYAni = Ani.to (this, 2, "tollboxY", tollboxYT);
-    bboxXAni = Ani.to (this, 2, "bboxX", bboxXT);
-    bboxYAni = Ani.to (this, 2, "bboxY", bboxYT);
-
-    //
-    //float w = geo.getW(shape.getChild(currentCountryIDonMap));
-    //float h = geo.getH(shape.getChild(currentCountryIDonMap));
-    //float d = (w > h) ? w : h;
-    //if (d < 142 * 0.9) {
-    //  mapScaleT = d;
-    //} else {
-    //  mapScaleT = scale;
-    //}
-    //mapScaleAni = Ani.to (this, 2, "mapScale", mapScaleT);
-
-    float x = width/2 - getCountryCentFromDatarowNO(_cut).x;
-    float y = height/2 - getCountryCentFromDatarowNO(_cut).y;
-    mapPosXT = x;
-    mapPosYT = y;
-    mapPosXAni = Ani.to (this, 2, "mapPosX", mapPosXT);
-    mapPosYAni = Ani.to (this, 2, "mapPosY", mapPosYT);
+    drawOthers();
   }
 
   // This method renders one signle country currently on scope
   // , based on the information of tablerow numbered as _now 
-  void drawCurrentCountry2 (PShape cc, int _now) {
+  void drawCurrentCountry(PShape cc, int _now) {
     // cc is the svg shape of country
     // _now is the number of the tablerow 
 
@@ -657,6 +570,51 @@ class Map { //<>//
     }
   }
 
+  void drawOthers () {
+    // H1 title
+    fill(0, 0, 100, 100);
+    textAlign (LEFT, TOP);
+    textFont(H1, 30);
+    text("CORONAVIRUS NOW", 20, 10);
+
+    // update detail
+    textAlign (RIGHT, TOP);
+    textFont(H3, 18);
+    text(getLastUpdateInfo(), width-padding, padding);
+  }
+
+  void updateView(int _cut) {
+    // if iso is missing 
+    if (isoMissing) {
+      // set locaBoundingBox target coordinate
+      bboxXT = cell*6.5;
+      bboxYT = tollboxY + cell + getRectSide (toll.get("New Cases"), toll.get("Total Cases"), 2*cell);
+
+      // set tollbox target coordinate
+      tollboxXT = cell*2;
+      tollboxYT = height - cell*2.5 - padding;
+    } else {
+      // set locaBoundingBox target coordinate
+      bboxXT = getCountryCentFromDatarowNO(_cut).x;
+      bboxYT = getCountryCentFromDatarowNO(_cut).y;
+
+      // set tollbox target coordinate
+      if (displayMode == '<') {
+        tollboxXT = 20;
+        tollboxYT = height - cell*2.5 - padding;
+      } else {
+        tollboxXT = width/2 + (2.5*cell) - padding*2;
+        tollboxYT = height - cell*2.5 - padding;
+      }
+    }
+
+    // init the animation 
+    tollboxXAni = Ani.to (this, 2, "tollboxX", tollboxXT);
+    tollboxYAni = Ani.to (this, 2, "tollboxY", tollboxYT);
+    bboxXAni = Ani.to (this, 2, "bboxX", bboxXT);
+    bboxYAni = Ani.to (this, 2, "bboxY", bboxYT);
+  }
+
   // other methods
   PVector getCountryCentFromDatarowNO (int _rowNo) {
     PVector pos = new PVector ();
@@ -687,10 +645,9 @@ class Map { //<>//
         Y = geo.getYmin(shape.getChild(m));
       }
     }
-    d = X;
     //d = float(nf(int(X), 4) + nf(int(Y), 4));
     //d = float(nf(int(pos.x), 4) + nf(int(Y), 4));
-    //d = pos.x*10000 + pos.y*(height/2);
+    d = pos.x + pos.y*10000;
     return d;
   }
   float getCountryPosXminFromDatarowNO (int _rowNo) {

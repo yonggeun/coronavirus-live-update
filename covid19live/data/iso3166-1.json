@@ -52,7 +52,7 @@
 	"GE": "Georgia",
 	"GH": "Ghana",
 	"GN": "Guinea",
-	"GM": "The Gambia",
+	"GM": "Gambia",
 	"GW": "Guinea-Bissau",
 	"GQ": "Equatorial Guinea",
 	"GR": "Greece",
@@ -174,7 +174,7 @@
 	"BM": "Bermuda",
 	"BB": "Barbados",
 	"KM": "Comoros",
-	"CV": "Cape Verde",
+	"CV": "Cabo Verde",
 	"KY": "Cayman Islands",
 	"DM": "Dominica",
 	"FK": "Falkland Islands",
@@ -197,7 +197,7 @@
 	"SG": "Singapore",
 	"SB": "Solomon Islands",
 	"ST": "São Tomé and Principe",
-	"SX": "Saint Martin (Dutch)",
+	"SX": "Sint Maarten",
 	"SC": "Seychelles",
 	"TC": "Turks and Caicos Islands",
 	"TO": "Tonga",
@@ -221,5 +221,6 @@
 	"GI": "Gibraltar",
 	"VA": "Vatican City",
 	"BL": "St. Barth",
-	"GU": "Guam"
+	"GU": "Guam",
+	"IM": "Isle of Man"
 }
