@@ -12,7 +12,6 @@ class Stage {
   Boolean isRecording;
   Boolean isLogging;
   StringList log;
-  
   Stage (int _w, int _fps, Boolean _ir, String _vault) {
     width  = _w;
     height = _w/16*9;
@@ -33,13 +32,11 @@ class Stage {
     path = new StringDict();
     path.set("user", System.getProperty("user.dir"));
     path.set("file", getClass().getEnclosingClass().getName());
-    
-    // set your own screen capture location
     if (split(System.getProperty("os.name"), " ")[0].equals("Windows")) {
-      // for windows
-      path.set("home", "D:\\yonggeun");
+      // windows
+       path.set("home", "D:\\yonggeun");
     } else { 
-      // for mac
+      //mac
       path.set("home", System.getProperty("user.home"));
     }
     path.set("sequence", path.get("home")+
@@ -52,7 +49,6 @@ class Stage {
     trace("00", "capture path :\t" + path.get("sequence"));
     trace("00", "screenshot path :\t" + path.get("screenshot"));
   }
-
   void screenshot (KeyEvent _e, String _ext) {
     String _path;
     if (_e.getKeyCode() == 32 && !isRecording) {
@@ -63,8 +59,6 @@ class Stage {
       trace("01", "Screenshot is unable to save since capturing is on gonig.");
     }
   }
-
-  // saves image file sequence to merge them into a video file. 
   void capture (String _ext) {
     if (isRecording) {
       String _path = path.get("sequence")+"########."+_ext;
@@ -72,13 +66,10 @@ class Stage {
       trace("01", "Recorder saved this frame at " + path.get("sequence") +nf(frameCount, 8)+"."+_ext);
     }
   }
-
-  // a handy replacement for println();
   void trace(String _pNumber, String msg) {
     println(msg + " " + _pNumber + ". [" + nf(frameCount, 6) + "]");
     log.append(msg + " " + _pNumber + ". [" + nf(frameCount, 6) + "]");
   }
-
   void turnLog (Boolean _b) {
     if (_b) {
       isLogging = true;
@@ -86,11 +77,9 @@ class Stage {
       isLogging = false;
     }
   }
-
   void render() {
     showLog ();
   }
-
   void showLog () {
     if (isLogging) {
       //println(log);
@@ -112,13 +101,11 @@ class Stage {
       // do nothing
     }
   }
-
   String getTimestamp() {
     String _return;
     _return = str(year())+"-" +str(month())+"-"+str(day())+ " " + nf(hour(), 2)+"-"+nf(minute(), 2);
     return _return;
   }
-
   String getPlayModeFrom (int _screenWidth) {
     String _playMode;
     switch (_screenWidth) {

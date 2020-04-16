@@ -1,7 +1,4 @@
 class Loader {
-  // this class loads google sheet file. 
-  // if succeeds loading, it saves the data to local folder in json format. 
-  // if fails loading, it will used the previously saved json file. 
   String url;
   String isourl;
   String status;
@@ -10,19 +7,17 @@ class Loader {
   FloatDict toll;
   Table table;
 
-  // Do NOT change this class name from processing.data.JSONObject to JSONObject
-  // It will cause vauge class name error due to the same name of the class in Twitter4j library.
   processing.data.JSONObject isoList;
-  boolean loaded;
+  Boolean loaded;
 
   //
   int updatedOn;
   String jsonDate;
-  boolean worldometerAccessible;
+  Boolean worldometerAccessible;
+
 
   //Sentinel sentinel;
-  //StringDict meta;
-
+  StringDict meta;
   Loader (String _dataType) {
     switch (_dataType) {
     case "data":
@@ -32,6 +27,7 @@ class Loader {
       type = "meta";
       break;
     }
+    //sentinel = new Sentinel();
   }
 
   void load (String Link, String ISOURL) {
@@ -54,18 +50,21 @@ class Loader {
     updatedOn = getUpdatedOn();
   }
 
-  // yet to be implemented. 
-  // okay to ignore this method.
+  //void refresh2 (Table T, float[] array) {
+  //  isoList = loadISOList (isourl);
+  //  loadSheetData (url);
+  //  T = table;
+  //  array = toll;
+  //}
+
   void loadMetaData (String Link) {
   }
-
   void loadSheetData (String Link) {
     loaded = false;
     processing.data.JSONObject _job;
     //Table _table;
     url = Link;
-
-    // check the link whether local or from internet. 
+    // check the link
     if (Link.substring(0, 4).equals("http") == true) {
       // if the link is internet url
       // then use getJsonFrom
@@ -75,19 +74,16 @@ class Loader {
         _job = parseJSONObject (_get.getContent());
         jsonDate = _get.getHeader("date");
         status = "online";
-        // send twitte DM to the give twitter account in Sentinel class.
         sentinel.inform("> Success loading datasheet from google");
         saveJSONObject (_job, "data/LOG-JSON/latest.json");
       } 
       catch (Throwable t) {
-        // if fails to load google spreadsheet
         status = "offline";
-
-        // send twitte DM to the give twitter account in Sentinel class.
         sentinel.report(t, frameCount);
-
         _job = loadJSONObject ("data/LOG-JSON/latest.json");
+        //jsonDate = _get.getHeader("date");
       }
+      //saveJSONObject (_job, "data/LOG-JSON/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".json");
     } else {
       // the link is local file
       _job = loadJSONObject (Link);
@@ -95,7 +91,6 @@ class Loader {
     }
     // parse the object to array
     processing.data.JSONArray _jarray = _job.getJSONArray("values");
-
     //
     table = getTable (_jarray);
     loaded = true;
@@ -110,6 +105,7 @@ class Loader {
     // | Country, Other  | Total Cases  | New Cases  | Total Deaths | New Deaths  | Total Recovered | Active Cases    | Serious, Critical  | Tot Cases/M pop  | ISO
 
     String isoError = null;
+    Boolean isoMismatch = false;  
 
     Table T = new Table();
     toll = new FloatDict();
@@ -120,42 +116,41 @@ class Loader {
       T.addColumn(columnName);
       toll.set(columnName, 0.0);
     }
-
+    //toll = new float[T.getColumnCount()]; // total 10
     //J.getJSONArray(0) is column titles.
+    //J.getJSONArray(0) is tool for each column. 
     // PARSE COLUMNS FOR EACH ROW
-    for (int i = 1; i < J.size()-1; i++) {
+    for (int i = 1; i < J.size(); i++) {
       TableRow TR = T.addRow();
-      // 0 country
+      //0 country
       TR.setString(0, J.getJSONArray(i).getString(0));
-
-      // following columns 
+      //print("J.getJSONArray(i).getString(0) : ", J.getJSONArray(i).getString(0));
       for (int j = 1; j < T.getColumnCount()-1; j++) {
         float localValue = 0;
         float _sum = toll.get(TR.getColumnTitle(j));
         if (J.getJSONArray(i).isNull(j) == false) {
           localValue = parseNumber (J.getJSONArray(i).getString(j));
           TR.setFloat(j, localValue);
+          //toll[j] += TR.getFloat(j);
           toll.set(TR.getColumnTitle(j), _sum + localValue);
         } else {
+          //localValue = -1;
           TR.setFloat(j, localValue);
+          //toll[j] += 0;
           toll.set(TR.getColumnTitle(j), _sum + localValue);
         }
       }
     }
-
-    // ADD THE LAST COLUMN ISO FOR EACH ROW 
-    // ISO data is from imported iso json list. 
-    // if any mismatch between country name and iso file, there will be a message
-    // You can simply change the mismatched name of country as same as the name in iso3166-1.iso file
-    // e.g source date "U.K.", but "UK" on iso file, then simply change the name is iso file into "U.K."
-    // then Map class will map the information onto the correct cooridnate on the loaded svg file. 
+    // ADD ISO COLUMN FOR EACH ROW
+    //8 iso
+    //println(J.getJSONArray(i).getString(0), "\t\t\t\t", getISOFromName(isoList, J.getJSONArray(i).getString(0)));
     T.addColumn("iso");
-    for (int i = 1; i < J.size()-1; i++) {
+    for (int i = 1; i < J.size(); i++) {
       if (getISOFromName(isoList, J.getJSONArray(i).getString(0)).equals("") 
         || getISOFromName(isoList, J.getJSONArray(i).getString(0)) == null) {
         //println(J.getJSONArray(i).getString(0), "has no name");
-
         // if there is no lable for the name give ID "**"
+        isoMismatch = true;
         T.setString(i-1, "iso", "**");
         if (isoError == null) {
           isoError = J.getJSONArray(i).getString(0) + " is not on ISO list.\n";
@@ -163,6 +158,8 @@ class Loader {
           isoError += J.getJSONArray(i).getString(0) + " is not on ISO list.\n";
         }
       } else {
+        isoMismatch = false;
+        //TR.setString(T.getColumnCount()-1, getISOFromName(isoList, J.getJSONArray(i).getString(0)));
         T.setString(i-1, "iso", getISOFromName(isoList, J.getJSONArray(i).getString(0)));
       }
     }
@@ -172,8 +169,7 @@ class Loader {
     }
     toll.set(T.getColumnTitle(0), T.getRowCount());
     toll.set(T.getColumnTitle(T.getColumnCount()-1), T.getRowCount());
-
-    // if necessay save csv file 
+    //println(toll);
     //saveTable(T, "data/LOG-CSV/"+str(year())+nf(month(), 2)+nf(day(), 2)+nf(hour(), 2)+nf(minute(), 2)+nf(second(), 2)+".csv");
     return T;
   }
@@ -186,6 +182,7 @@ class Loader {
   int parseDate (String D) {
     String R;
     String[] P = splitTokens (D, "- :");
+    //R = P[2]+nf(int(P[0]), 2) + nf(int(P[1]), 2)+nf(int(P[3]), 2) + nf(int(P[4]), 2) + "L";
     R = nf(int(P[0]), 2) +nf(int(P[1]), 2)+nf(int(P[3]), 2) + nf(int(P[4]), 2);
     return int (R);
   }
@@ -207,43 +204,49 @@ class Loader {
     if (r == null) {
       code = "";
     } else {
+      //for (int k = 0; k < r.length; k++) {
+      //  println(r[k]);
+      //}
       code = r[1];
     }
+    //code = isoList.getString(name);
     return code;
   }
-
   String getNameFromISO (String isocode) {
-    return isoList.getString(isocode);
+    String name;
+    name = isoList.getString(isocode);
+    return name;
   }
-
+  //int getUpdatedOn1 () {
+  //  int a = 02101230; 
+  //  return a;
+  //}
   int getUpdatedOn () {
-    // get the time when the source date udpated in GMT 
     String url = "http://www.worldometers.info/coronavirus/";
     String _lastUpdated;
+    //String[] month = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     String[] updated;
     int updatedInMinute;
+    // March 11, 2020, 05:10 GMT
+    // Get the raw HTML source into an array of strings (each line is one element in the array).
+    // The next step is to turn array into one long string with join().
     try {
       String[] lines = loadStrings(url);
       String html = join(lines, "");
       String start = "id=\"page-top\">COVID-19 Coronavirus Outbreak</div><div style=\"font-size:13px; color:#999; text-align:center\">Last updated: ";
       String end = "</div><div style=\"margin-top:20px; text-align:center; font-size:14px\"><a href=\"/coronavirus/coronavirus-cases/\">";
       _lastUpdated = giveMeTextBetween(html, start, end);
-      // will return as 
-      // March 13, 2020, 05:35 GMT
+      //March 13, 2020, 05:35 GMT
       updated = splitTokens(_lastUpdated, ", :");
-      // take only time passed in minute excluding the month and year information.
       updatedInMinute = int(updated[4]) + int(updated[3]) * 60 + int(updated[1]) * 24*60 + 480;
       worldometerAccessible = true;
     } 
     catch (Throwable t) {
+      //Fri, 13 Mar 2020 05:34:29 GMT
+      //println("JSON response header -> date : ", _get.getHeader("date"));
       println("> http://www.worldometers.info/coronavirus/ is missing or inaccessible " + sentinel.nowInString());
       sentinel.inform ("> http://www.worldometers.info/coronavirus/ is missing or inaccessible");
-
-      // will return as 
-      //Fri, 13 Mar 2020 05:34:29 GMT
       _lastUpdated = jsonDate;
-
-      // then parse as above. 
       updated = splitTokens(_lastUpdated, ", :");
       updatedInMinute = int(updated[5]) + int(updated[4]) * 60 + int(updated[1]) * 24*60 + 480;
       worldometerAccessible = false;

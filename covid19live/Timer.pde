@@ -1,20 +1,12 @@
 class Timer {
-  // cut is an ID for single sequence out of whole length cycle.
-  // cut corresponds to a table row 
-  int currentCut;
-  int totalCuts;
-  boolean changed;
-
-  // cycle is a counter to show how many cycle has been played
-  // cut corresponds to a whole data table
   int cycle;
   int cycleDurationMS;
   int cycleDuration;
-
-  // interval is the duration of one single cut.
   float intervalDuration;
   int intervalDurationMS;
-
+  int currentCut;
+  int totalCuts;
+  Boolean changed;
   Timer (float _duration, int _cuts) {
     intervalDuration = 0;
     currentCut = 0;
@@ -26,12 +18,10 @@ class Timer {
     intervalDurationMS = int(intervalDuration * 1000);
     cycleDurationMS = intervalDurationMS * totalCuts;
   }
-
   void getCutNow() {
     int ex_currentCut = currentCut;
+    //println("cycleDurationMS : ",cycleDurationMS);
     if (millis() > 0) {
-      // millis() returns negative when it exeeds interger boundry
-      // Integers can be as large as 2,147,483,647 and as low as -2,147,483,648.
       cycle = floor(millis() / cycleDurationMS);
       currentCut = floor ((millis() % cycleDurationMS) / intervalDurationMS);
     } else {
@@ -47,11 +37,10 @@ class Timer {
       changed = false;
     }
   }
-
+  //println("currentCut : "+currentCut);  }
   void update() {
     getCutNow();
   }
-
   void onChanged() {
   }
 }
