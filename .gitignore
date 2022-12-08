@@ -9,8 +9,8 @@ application.windows64
 application.macosx
 out
 #folders
-font/
-*/font/
+#font/
+#*/font/
 LOG-CSV/
 LOG-JSON/
 /streaming/
@@ -21,7 +21,7 @@ dev/
 *.key
 #design files
 *.ai
-*.ttf
+#*.ttf
 *.vlw
 #google files
 *.gsheet
